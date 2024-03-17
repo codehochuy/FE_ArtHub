@@ -21,9 +21,12 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
-const addToCart = (values) => {
-  console.log("Values:", values);
-  return axios.post(API_URL + "addToCart", { values }, { headers: authHeader() })
+const addToCart = (data) => {
+  // console.log("Values:", artworkId);
+  console.log("data:", data);
+  // console.log("Values:", userId);
+  return axios.post(API_URL + "addToCart",  data , { headers: authHeader() })
+ 
     .then((response) => {
       console.log("API Response:", response.data); 
       return response.data; 

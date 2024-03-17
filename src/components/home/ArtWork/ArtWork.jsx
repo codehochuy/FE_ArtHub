@@ -7,6 +7,7 @@ import { MdOutlineLabelImportant } from "react-icons/md";
 // import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 
+
 // import { useDispatch } from "react-redux";
 
 import { addToCart } from "../../../redux/slice/productSlice";
@@ -19,6 +20,7 @@ import userService from "../../../api/user.service";
 import artworkService from "../../../api/artwork.service";
 // import Cart from "../pages/cart/Cart";
 import "./ArtWork.css"; // Import CSS styles for NewArrivals component
+// import NewArrivals from "../newArrivals/NewArrivals";
 // import NewArrivals from "../newArrivals/NewArrivals";
 
 
@@ -73,10 +75,9 @@ const ArtWorkPage = (props) => {
 
   const addToCart = (artworkId) => {
     console.log("Adding artwork to cart. Artwork ID:", artworkId);
-    console.log("Adding artwork to cart. userId ID:", userId);
-    userService
-      .addToCart([
-        {
+    // console.log("Adding artwork to cart. userId:", userId);
+    userService.addToCart(
+       { 
           // productName: props.productName,
           // price: props.price,
           quantity: 1,
@@ -86,8 +87,8 @@ const ArtWorkPage = (props) => {
           // console.log(artworkId);
           
   
-        },
-      ])
+         }  
+      )
       
       .then((data) => {
         console.log(data.data);
@@ -122,7 +123,9 @@ const ArtWorkPage = (props) => {
     <div>
     <h1>Artwork List</h1>
     {artWorks.map(artwork => (
-      <div key={artwork.artworkId} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
+    
+      <div 
+      key={artwork.artworkId} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
         <h2>{artwork.artworkName}</h2>
         <img src={atob(artwork.artworkUrl)} alt={artwork.artworkName} style={{ maxWidth: '200px' }} />
         <p>Posted At: {new Date(artwork.postedAt).toLocaleDateString()}</p>
@@ -132,7 +135,8 @@ const ArtWorkPage = (props) => {
          <li
               // onClick={() => addToCart()}
               onClick={() => addToCart(artwork.artworkId)}
-              data-id={artwork.artworkId} // Thêm data-id ẩn vào đây
+            
+
               className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
             >
               Add to Cart
