@@ -8,55 +8,237 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import userService from "../../api/user.service";
+import { useNavigate } from "react-router-dom";
 // import authServices from "../../api/voucher.service";
 
 const Cart = () => {
 //   const [vouchers, setVouchers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [listCart, setListCart] = useState([]);
-  const [cartTotal, setCartTotal] = useState("");
-  const [load, setLoad] = useState(null);
+  // const [listCart, setListCart] = useState([]);
+  // const [cartTotal, setCartTotal] = useState("");
+  const [carts, setCarts] = useState([]);
+  // const [load, setLoad] = useState(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const navigate = useNavigate();
 //   const [usedVouchers, setUsedVouchers] = useState([]);
 
+  // useEffect(() => {
+  //   // listVouchers();
+  //   loadCartFromLocalStorage();
+  // }, [load]);
   useEffect(() => {
-    // listVouchers();
-    loadCartFromLocalStorage();
-  }, [load]);
-
-  // handle Call API for fetch data
-  const fetchCart = async () => {
-    userService.getCart().then((data) => {
-      console.log(data);
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setListCart(data.data.data);
-        setCartTotal(data.data?.cartTotal);
+    const fetchData = async () => {
+      try {
+        const response = await userService.getCart();
+        setCarts(response.data);
+        // console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error fetching artworks:", error);
       }
-    });
-  }
+   
 
-  const loadCartFromLocalStorage = () => {
-    const storedCart = JSON.parse(localStorage.getItem("cart"));
-    // console.log("Stored cart data:", storedCart);
-    if (Array.isArray(storedCart) && storedCart.length > 0) {
-      const artworks = storedCart.map(item => ({
-        artwork: {
-            artworkUrl: item.artworkUrl,
-            artworkName: item.artworkName,
-            price: item.price,
-            artworkId: item.artworkId,
-        },
-        quantity: 1,
-      
-      }));
-      const total = artworks.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
-      setListCart(artworks);
-      setCartTotal(total);
-    } else {
-      console.log("Invalid cart data found in local storage");
-    }
+    };
+    fetchData();
+  }, []);
+
+
+  // isLoggedIn,navigate
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
   };
+    // handle Call API for fetch data
+    const fetchCart = async () => {
+      userService.getCart().then((data) => {
+        console.log(data);
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setListCart(data.data.data);
+          setCartTotal(data.data?.cartTotal);
+        }
+      });
+    }
+
+    const formattotalPrice = (totalPrice) => {
+      let formattedPrice = totalPrice.toString();
+      let result = '';
+      for (let i = formattedPrice.length - 1, j = 1; i >= 0; i--, j++) {
+        result = formattedPrice[i] + result;
+        if (j % 3 === 0 && i !== 0) {
+          result = '.' + result;
+        }
+      }
+      return result + ' VNĐ';
+    };
+    const TotalPrice = () => {
+      let totalPrice = 0;
+      carts.forEach(cart => {
+        totalPrice += cart.artwork.price;
+      });
+      return formattotalPrice(totalPrice);
+    };
+    const returnTotalPrice = () => {
+      let totalPrice = 0;
+      carts.forEach(cart => {
+        totalPrice += cart.artwork.price;
+      });
+      return totalPrice;
+    };
+    
+    const formatPrice = (price) => {
+      let formattedPrice = price.toString();
+      let result = '';
+      for (let i = formattedPrice.length - 1, j = 1; i >= 0; i--, j++) {
+        result = formattedPrice[i] + result;
+        if (j % 3 === 0 && i !== 0) {
+          result = '.' + result;
+        }
+      }
+      return result;
+    };
+    const formatDate = (postedAt) => {
+      // Tạo đối tượng Date từ chuỗi ngày đầu vào
+      const date = new Date(postedAt);
+      // Lấy các thành phần ngày, tháng, năm từ đối tượng Date
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      // Format lại thành chuỗi ngày/tháng/năm
+      return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+    };
+    const handleCheckout = () => {
+      // Lưu giá trị TotalPrice vào localStorage
+      localStorage.setItem("totalPrice", returnTotalPrice());
+     
+    };
+    const handleRemoveFromCart = (cartId) => {
+      userService.remove_from_cart(cartId)
+          .then((response) => {
+            if (response.data && response.data.status === 'Item removed from cart successfully') {
+              toast.success("Xoá thành công", {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+              window.location.reload();
+            } else {
+              toast.error("Xoá thất bại", {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+            }
+          })
+          .catch((error) => {
+              console.error("Error deleting cart item:", error);
+          });
+  };
+    
+  return (
+    <div style={{ marginLeft: '50px' , marginRight: '50px'}}>
+      <section className="pt-9 pb-9">
+        <Container className="pl-8 pr-8">
+          <Row className="d-flex">
+            <Col lg="9">
+              {carts && carts.length > 0 ? (
+                <table className="table bordered">
+                  <thead>
+                    <tr>
+                    <th>STT</th>
+                      <th>Tên tác phẩm</th>
+                      <th>Ảnh tác phẩm</th>
+                      {/* <th>Ngày tạo</th> */}
+                      <th>Giá</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {carts.map((cart, index) => (
+                      <tr key={cart.cartId}>
+                         <td>{index +1}</td>
+                         <td>{cart.artwork.artworkName}</td>
+                         <img src={cart.artwork.artworkUrl} alt="" style={{ maxWidth: '250px' }} />
+                         {/* <td>{formatDate(cart.artwork.postedAt)}</td> */}
+                         <td>{formatPrice(cart.artwork.price)}</td>
+                         <td>
+                         <button onClick={() => handleRemoveFromCart(cart.cartId)}>Delete</button>
+</td>
+                      </tr>
+                    ))}
+                  </tbody>
+             
+                </table>
+              ) : (
+                <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
+
+              )}
+            </Col>
+            {carts.length > 0 && (
+               <Col lg="3">
+              <div>
+                <h6 className="d-flex align-items-center justify-content-between">
+                Tổng tiền hàng: <span className="fs-4 fw-bold">{TotalPrice()}</span>
+                </h6>
+              </div>
+              <p className="fs-5 mt-2">
+              </p>
+              
+                <div style={{ marginBottom: "300px" }}>
+                  <div className="relative mt-6">
+                    <div className="absolute inset-y-1 right-1 flex justify-end">
+                    <button className="buy_btn mt-3 w-100" onClick={handleCheckout}>
+              <Link to="/checkout">Thanh toán</Link>
+            </button>
+                      <button className="buy_btn mt-3 w-100">
+                        <Link to="/home">Trở về</Link>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+             
+            </Col>
+             )}
+          </Row>
+        </Container>
+      </section>
+    </div>
+  );
+};
+
+export default Cart;
+
+
+
+  // const loadCartFromLocalStorage = () => {
+  //   const storedCart = JSON.parse(localStorage.getItem("cart"));
+  //   // console.log("Stored cart data:", storedCart);
+  //   if (Array.isArray(storedCart) && storedCart.length > 0) {
+  //     const artworks = storedCart.map(item => ({
+  //       artwork: {
+  //           artworkUrl: item.artworkUrl,
+  //           artworkName: item.artworkName,
+  //           price: item.price,
+  //           artworkId: item.artworkId,
+  //       },
+  //       quantity: 1,
+      
+  //     }));
+  //     const total = artworks.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
+  //     setListCart(artworks);
+  //     setCartTotal(total);
+  //   } else {
+  //     console.log("Invalid cart data found in local storage");
+  //   }
+  // };
+
 
 //   const listVouchers = () => {
 //     authServices
@@ -116,156 +298,68 @@ const Cart = () => {
 //     }
 //   };
   
-  const Tr = ({ item }) => {
-    // const deleteProduct = () => {
-    //   if (item.productId) {
-    //     deleteProductFromLocalStorage(item.productId);
-    //   } else {
-    //     console.log("ProductID is undefined");
-    //   }
-    // };
+  // const Tr = ({ item }) => {
+  //   // const deleteProduct = () => {
+  //   //   if (item.productId) {
+  //   //     deleteProductFromLocalStorage(item.productId);
+  //   //   } else {
+  //   //     console.log("ProductID is undefined");
+  //   //   }
+  //   // };
   
 
-    const increaseQuantity = (productId) => {
-      const updatedCart = listCart.map((cartItem) => {
-        if (cartItem.artwork.artworkId === artworkId) {
-          return { ...cartItem, count: cartItem.count + 1 };
-        }
-        return cartItem;
-      });
-      updateCart(updatedCart);
-    };
+  //   const increaseQuantity = (productId) => {
+  //     const updatedCart = listCart.map((cartItem) => {
+  //       if (cartItem.artwork.artworkId === artworkId) {
+  //         return { ...cartItem, count: cartItem.count + 1 };
+  //       }
+  //       return cartItem;
+  //     });
+  //     updateCart(updatedCart);
+  //   };
 
-    const decreaseQuantity = (productId) => {
-      const updatedCart = listCart.map((cartItem) => {
-        if (cartItem.artwork.artworkId === artworkId && cartItem.count > 1) {
-          return { ...cartItem, count: cartItem.count - 1 };
-        }
-        return cartItem;
-      });
-      updateCart(updatedCart);
-    };
+  //   const decreaseQuantity = (productId) => {
+  //     const updatedCart = listCart.map((cartItem) => {
+  //       if (cartItem.artwork.artworkId === artworkId && cartItem.count > 1) {
+  //         return { ...cartItem, count: cartItem.count - 1 };
+  //       }
+  //       return cartItem;
+  //     });
+  //     updateCart(updatedCart);
+  //   };
 
-    return (
-      <tr>
-        <td>
-          {/* <img src={item.product.img} alt="" /> */}
-          {item.artwork && item.artwork.artworkUrl && <img src={item.artwork.artworkUrl} alt="" />}
-        </td>
-        {/* <td>{item.product.productName}</td> */}
-        <td>{item.artwork && item.artwork.artworkName}</td>
-        <td>{item.artwork.price}</td>
-        <td>
-          {/* <button
-            onClick={() => decreaseQuantity(item.product._id)}
-            className="small-btn text-white font-bold py-1 px-2 rounded-md text-sm"
-          >
-            -
-          </button> */}
-          {item.quantity}
-          {/* <button
-            onClick={() => increaseQuantity(item.product._id)}
-            className="small-btn text-white font-bold py-1 px-2 rounded-md text-sm"
-          >
-            +
-          </button> */}
-        </td>
-        {/* <td>
-          <button onClick={deleteArtwork}>Delete</button>
-        </td> */}
-      </tr>
-    );
-  };
+  //   return (
+  //     <tr>
+  //       <td>
+  //         {/* <img src={item.product.img} alt="" /> */}
+  //         {item.artwork && item.artwork.artworkUrl && <img src={item.artwork.artworkUrl} alt="" />}
+  //       </td>
+  //       {/* <td>{item.product.productName}</td> */}
+  //       <td>{item.artwork && item.artwork.artworkName}</td>
+  //       <td>{item.artwork.price}</td>
+  //       <td>
+  //         {/* <button
+  //           onClick={() => decreaseQuantity(item.product._id)}
+  //           className="small-btn text-white font-bold py-1 px-2 rounded-md text-sm"
+  //         >
+  //           -
+  //         </button> */}
+  //         {item.quantity}
+  //         {/* <button
+  //           onClick={() => increaseQuantity(item.product._id)}
+  //           className="small-btn text-white font-bold py-1 px-2 rounded-md text-sm"
+  //         >
+  //           +
+  //         </button> */}
+  //       </td>
+  //       {/* <td>
+  //         <button onClick={deleteArtwork}>Delete</button>
+  //       </td> */}
+  //     </tr>
+  //   );
+  // };
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  return (
-    <div>
-      <section className="pt-9 pb-9">
-        <Container className="pl-8 pr-8">
-          <Row className="d-flex">
-            <Col lg="9">
-              {listCart.length > 0 ? (
-                <table className="table bordered">
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {listCart.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          {item.artwork && item.artwork.artworkUrl && (
-                            <img src={item.artwork.artworkUrl} alt="" />
-                          )}
-                        </td>
-                        <td>{item.artwork && item.artwork.artworkName}</td>
-                        <td>{item.artwork && item.artwork.price}</td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              handleDecreaseQuantity(item.artwork.artworkId)
-                            }
-                          >
-                            -
-                          </button>
-                          {item.quantity}
-                          <button
-                            onClick={() =>
-                              handleIncreaseQuantity(item.artwork.artworkId)
-                            }
-                          >
-                            +
-                          </button>
-                        </td>
-                        <td>Delete</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <h2 className="fs-4 text-center">No item added to the cart</h2>
-              )}
-            </Col>
-
-            <Col lg="3">
-              <div>
-                <h6 className="d-flex align-items-center justify-content-between">
-                  Subtotal: <span className="fs-4 fw-bold">${cartTotal}</span>
-                </h6>
-              </div>
-              <p className="fs-5 mt-2">
-                Taxes and shipping will calculate in checkout
-              </p>
-              <div>
-                <div className="relative mt-6">
-                  <div className="absolute inset-y-1 right-1 flex justify-end">
-                    <button className="buy_btn mt-3 w-100">
-                      <Link to="/checkout">Check out</Link>
-                    </button>
-                    <button className="buy_btn mt-3 w-100">
-                      <Link to="/home">Continue Shopping</Link>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </div>
-  );
-};
-
-export default Cart;
+  
 
 //   const addVoucher = () => {
 //     if (!searchQuery) {

@@ -11,6 +11,9 @@
   const authHeader = () => {
   const access_token = localStorage.getItem('access_token');
   const usersID = localStorage.getItem('usersID');
+  const audience = localStorage.getItem('usersID');
+
+
   // console.log('userid' , usersID);
   
   // console.log('access_token:', access_token);
@@ -19,7 +22,8 @@
     return { 
       Authorization: 'Bearer ' + access_token, 
       'Content-Type': 'application/json',
-      'userID': usersID 
+      'userID': usersID,
+  
     };
     
   } else {

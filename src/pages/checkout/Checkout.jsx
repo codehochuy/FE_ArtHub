@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import Image from "../../components/designLayouts/Image";
-import authService from "../../api/user.service";
+import userService from "../../api/user.service";
 import { toast } from "react-toastify";
 const Checkout = () => {
   const [listCart, setListCart] = useState([]);
   const [load, setLoad] = useState(null);
+  const orderPrice = localStorage.getItem("totalPrice");
+ 
+  const userId = localStorage.getItem("usersID");
   useEffect(() => {
-    authService.getCart().then((data) => {
+    userService.getCart().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -14,36 +17,95 @@ const Checkout = () => {
       }
     });
   }, [load]);
-  const postOrder = () => {
-    authService
-      .postOrder({
-        COD: true,
-        couponApplied: "HOLY",
+  
+  const createOrder = () => {
+    userService
+      .createOrder({
+        orderPrice: orderPrice,
+        audience: userId
       })
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
+      .then((response) => {
+        if (response.data && response.data.order && response.data.order.orderId) {
+          const orderId = response.data.order.orderId;
+          // console.log("Order ID:", orderId);
+          createOrderDetail(orderId); // Gọi hàm createOrderDetail và truyền orderId vào đó
         } else {
-          authService.emptyCart().then(() => {
-            toast.success("Order added successfully", {
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
-            setLoad(data.data);
+          // console.log("Order ID not found in response");
+          toast.error("Tạo đơn hàng thất bại", {
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
           });
         }
+      })
+      .catch((error) => {
+        console.error("Error creating order:", error);
+        // Xử lý khi có lỗi
       });
-  };
+    };
+          
+      
+        const createOrderDetail = (orderId) => {
+          userService
+            .createOrderDetail({
+              orderId: orderId,
+              audience: userId
+            })
+            .then((response) => {
+               if (response.data && response.data.status === "Create order detail successful") {
+          toast.success("Tạo đơn hàng thành công", {
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setLoad(response.data);
+        } else {
+          toast.error("Tạo đơn hàng thất bại", {
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+            })
+            .catch((error) => {
+              console.error("Error creating order detail:", error);
+              // Xử lý khi có lỗi
+            });
+      };
+
+      const formattotalPrice = (orderPrice) => {
+        let formattedPrice = orderPrice.toString();
+        let result = '';
+        for (let i = formattedPrice.length - 1, j = 1; i >= 0; i--, j++) {
+          result = formattedPrice[i] + result;
+          if (j % 3 === 0 && i !== 0) {
+            result = '.' + result;
+          }
+        }
+        return result + ' VNĐ';
+      };
+
+
+
+    
+
   return (
     <>
       <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" className="text-2xl font-bold text-gray-800">
-          Checkout
+          Trang thanh toán
         </a>
         <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
           <div className="relative">
@@ -68,7 +130,7 @@ const Checkout = () => {
                     />
                   </svg>
                 </a>
-                <span className="font-semibold text-gray-900">Shop</span>
+                <span className="font-semibold text-gray-900">Giỏ hàng</span>
               </li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +153,7 @@ const Checkout = () => {
                 >
                   2
                 </a>
-                <span className="font-semibold text-gray-900">Payment</span>
+                <span className="font-semibold text-gray-900">Thanh toán</span>
               </li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -121,8 +183,8 @@ const Checkout = () => {
         </div>
       </div>
       <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
-        <div className="px-4 pt-8">
-          <p className="text-xl font-medium">Order Summary</p>
+        {/* <div className="px-4 pt-8">
+          <p className="text-xl font-medium">Chưa biết ghi gì ở đây</p>
           <p className="text-gray-400">
             Check your items. And select a suitable shipping method.
           </p>
@@ -147,12 +209,12 @@ const Checkout = () => {
                 </div>
               ))}
           </div>
-        </div>
+        </div> */}
         <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
           <p className="text-xl font-medium">
-            Subtotal: ${listCart?.totalAfterDiscount}
+            Địa chỉ giao hàng
           </p>
-          <p className="mt-8 text-lg font-medium">Payment Methods</p>
+          {/* <p className="mt-8 text-lg font-medium">Payment Methods</p>
           <form className="mt-5 grid gap-6">
             <div className="relative">
               <input
@@ -211,9 +273,78 @@ const Checkout = () => {
           </form>
           <button
             className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-            onClick={() => postOrder()}
+            onClick={() => createOrder(orderPrice)}
           >
-            Place Order
+            Đặt hàng
+          </button> */}
+        </div>
+
+        <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+        <p className="text-xl font-medium">
+Tổng thanh toán: {formattotalPrice(orderPrice)}
+</p>
+          <p className="mt-8 text-lg font-medium">Phương thức thanh toán</p>
+          <form className="mt-5 grid gap-6">
+            <div className="relative">
+              <input
+                className="peer hidden"
+                id="radio_1"
+                type="radio"
+                name="radio"
+                checked
+              />
+              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+              <label
+                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                htmlFor="radio_1"
+              >
+                <img
+                  className="w-14 object-contain"
+                  src="/images/vnpay logo.png"
+                  alt=""
+                />
+              <div className="ml-5">
+  <span className="mt-2 font-semibold">Ví VNPAY</span>
+  <img src="../../assets/images/Checkout/vnpay_logo.jpg" alt="VNPAY Logo" />
+</div>
+
+
+              </label>
+            </div>
+            <div className="relative">
+              <input
+                className="peer hidden"
+                id="radio_2"
+                type="radio"
+                name="radio"
+                checked
+              />
+              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+              <label
+                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                htmlFor="radio_2"
+              >
+                <img
+                  className="w-14 object-contain"
+                  src="/images/oG8xsl3xsOkwkMsrLGKM4.png"
+                  alt=""
+                />
+                <div className="ml-5">
+                  <span className="mt-2 font-semibold">
+                    Thanh toán khi nhận hàng (COD)
+                  </span>
+                  {/* <p className="text-slate-500 text-sm leading-6">
+                    Delivery: 2-4 Days
+                  </p> */}
+                </div>
+              </label>
+            </div>
+          </form>
+          <button
+            className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+            onClick={() => createOrder(orderPrice)}
+          >
+            Đặt hàng
           </button>
         </div>
       </div>

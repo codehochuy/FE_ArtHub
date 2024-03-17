@@ -1,5 +1,6 @@
 .new-artworks-container {
     margin-bottom: 2rem;
+    
   }
   
   .new-artworks-item {
@@ -30,4 +31,96 @@
   .artwork-price {
     font-size: 0.9rem;
   }
+  .cart-row {
+    margin-bottom: 20px;
+    border: '1px solid #ccc';
+     padding: '10px';
+      margin-left: 300px;
+       margin-right: 300px;
+  }
+  .zoomed-image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền với độ mờ */
+    z-index: 1000; /* Đảm bảo nằm trên tất cả các phần tử khác */
+    display: flex;
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    transition: opacity 0.3s ease; /* Hiệu ứng transition cho độ mờ */
+  }
+  
+  .zoomed-image {
+    max-width: 90%; /* Giới hạn kích thước tối đa của hình ảnh */
+    max-height: 90vh; /* Giới hạn kích thước tối đa của hình ảnh theo chiều dọc */
+    transition: transform 0.3s ease; /* Hiệu ứng transition cho kích thước và vị trí */
+
+  }
+  .artwork-name {
+    font-weight: bold;
+    font-size: 24px; /* Có thể điều chỉnh kích thước phù hợp */
+    margin-left: 50px;
+  }
+  .artwork-postat {
+    /* font-weight: bold; */
+    font-size: 14px; /* Có thể điều chỉnh kích thước phù hợp */
+    margin-left: 50px;
+    margin-bottom: 10px;
+  }
+
+  
+  .artwork-image {
+    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của div */
+    margin-bottom: 15px; /* Khoảng cách giữa hình ảnh và các phần tử khác */
+    border-top: 1px solid #ccc; /* Đường kẻ trên */
+    border-bottom: 1px solid #ccc; /* Đường kẻ dưới */
+  }
+  .artwork-info-container {
+    display: flex;
+    justify-content: space-between; /* Các phần tử sẽ được căn đều với nhau và căn cách tuyệt đối giữa chúng */
+    align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+    margin-bottom: 10px;
+  }
+  
+  .artwork-like {
+    order: 1; /* Sắp xếp phần tử này ở vị trí đầu tiên */
+    margin-left: 30px;
+    font-size: 16px;
+    display: flex;
+    align-items: center; 
+    margin-right: 5px;
+  }
+  
+  .artwork-comment {
+    order: 2; /* Sắp xếp phần tử này ở vị trí thứ hai */
+    font-size: 16px;
+  }
+  
+  .artwork-price {
+    order: 3; /* Sắp xếp phần tử này ở vị trí cuối cùng */
+    margin-right: 20px;
+    
+    font-size: 16px;
+  }
+  .heart-icon {
+    margin-right: 5px;
+  }
+  
+  .like-count {
+    margin-left: 5px;
+  }
+  
+  
+  
+  
+
+  
+  
+  
+
+    
+  
+
   

@@ -22,6 +22,7 @@ import artworkService from "../../../api/artwork.service";
 import "./ArtWork.css"; // Import CSS styles for NewArrivals component
 // import NewArrivals from "../newArrivals/NewArrivals";
 // import NewArrivals from "../newArrivals/NewArrivals";
+import { FaHeart } from 'react-icons/fa';
 
 
 
@@ -58,12 +59,19 @@ const ArtWorkPage = (props) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("usersID");
   // const [userId, setUserId] = useState(localStorage.getItem("usersID"));
+  const [zoomedImage, setZoomedImage] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [isImageClicked, setIsImageClicked] = useState(false);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await artworkService.getArtWork();
         setArtWorks(response.data);
+
+      
       } catch (error) {
         console.error("Error fetching artworks:", error);
       }
@@ -74,29 +82,22 @@ const ArtWorkPage = (props) => {
  
 
   const addToCart = (artworkId) => {
-    console.log("Adding artwork to cart. Artwork ID:", artworkId);
+    // console.log("Adding artwork to cart. Artwork ID:", artworkId);
     // console.log("Adding artwork to cart. userId:", userId);
     userService.addToCart(
        { 
           // productName: props.productName,
           // price: props.price,
-          quantity: 1,
+          // quantity: 1,
           userId: userId,
           // discount: props.discount,
           artworkId: String(artworkId),
-          // console.log(artworkId);
-          
-  
          }  
       )
-      
-      .then((data) => {
-        console.log(data.data);
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          toast.success("Artwork added successfully", {
-            autoClose: 3000,
+      .then((response) => {
+        if (response.data && response.data.status === 'This artwork is already in the cart.') {
+          toast.error("Artwork đã có trong giỏ hàng", {
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -104,48 +105,123 @@ const ArtWorkPage = (props) => {
             progress: undefined,
             theme: "dark",
           });
-  
-          // Lấy danh sách sản phẩm từ local storage
-          const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-          // Thêm sản phẩm mới vào danh sách
-          const updatedCart = [...existingCart, props];
-  
-          // Chuyển đổi danh sách sản phẩm thành chuỗi JSON và lưu vào local storage
-          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        } else {
+          toast.success("Thêm thành công", {
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       });
   };
+ 
+  const handleImageClick = (imageUrl) => {
+    setZoomedImage(imageUrl);
+  };
+  const handleZoomedImageOverlayClick = () => {
+    setZoomedImage(null);
+  };
+  
+  
+  
+  const handleWheelZoom = (event) => {
+    if (zoomedImage && isImageHovered) {
+      // Ngăn chặn cuộn trang mặc định của trình duyệt
+      event.preventDefault();
+  
+      // Kiểm tra hướng cuộn chuột
+      const delta = Math.sign(event.deltaY);
+  
+      // Tăng hoặc giảm zoomLevel tùy thuộc vào hướng cuộn chuột
+      setZoomLevel(prevZoomLevel => prevZoomLevel + delta * 0.1);
+    }
+  };
+  function formatPrice(price) {
+    // Chuyển giá thành chuỗi và đảm bảo đó là số
+    price = parseFloat(price).toFixed(0).toString();
+  
+    // Sử dụng regex để thêm dấu chấm sau mỗi 3 chữ số từ cuối cùng
+    return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
+  }
+  
+  
+  
+  
 
-
+          // // Lấy danh sách sản phẩm từ local storage
+          // const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+          // // Thêm sản phẩm mới vào danh sách
+          // const updatedCart = [...existingCart, props];
+  
+          // // Chuyển đổi danh sách sản phẩm thành chuỗi JSON và lưu vào local storage
+          // localStorage.setItem("cart", JSON.stringify(updatedCart));
 
     return (
     <div>
-    <h1>Artwork List</h1>
     {artWorks.map(artwork => (
-    
       <div 
-      key={artwork.artworkId} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
-        <h2>{artwork.artworkName}</h2>
-        <img src={atob(artwork.artworkUrl)} alt={artwork.artworkName} style={{ maxWidth: '200px' }} />
-        <p>Posted At: {new Date(artwork.postedAt).toLocaleDateString()}</p>
-        <p>Price: {artwork.price}</p>
-        <p>Likes: {artwork.likeCount}</p>
-        <p>Comments: {artwork.commentCount}</p>
-         <li
-              // onClick={() => addToCart()}
-              onClick={() => addToCart(artwork.artworkId)}
-            
+        key={artwork.artworkId} 
+        // className="artwork-container"
+        style={{ 
+          border: '1px solid #ccc', 
+          padding: '10px', 
+          marginTop: '25px',
+          marginLeft: '300px', 
+          marginRight: '300px', 
+          marginBottom:'25px',
+          borderRadius: '10px', // Bo các góc
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' // Hiệu ứng bề mặt nổi
+        }}
+      >
+        <p className="artwork-name">{artwork.artworkName}</p>
+        <p className="artwork-postat">{new Date(artwork.postedAt).toLocaleDateString()}</p>
+        <img 
+          src={artwork.artworkUrl}  
+          // style={{ maxWidth: `${zoomLevel * 600}px`, cursor: 'pointer' }} 
+          className="artwork-image"
+          onClick={() => handleImageClick(artwork.artworkUrl)}
+          onMouseEnter={() => setIsImageHovered(true)}
+          onMouseLeave={() => setIsImageHovered(false)}
+        />
 
+
+
+<div className="artwork-info-container">
+ 
+<div className="artwork-like">
+  <FaHeart className="heart-icon" />
+  <span className="like-count">{artwork.likeCount}</span>
+</div>
+
+
+
+
+
+  <div className="artwork-comment">{artwork.commentCount} bình luận </div>
+  <div className="artwork-price">{formatPrice(artwork.price)}</div>
+</div>
+
+         <li
+              onClick={() => addToCart(artwork.artworkId)}
               className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
             >
-              Add to Cart
+               Add to Cart
               <span>
                 <FaShoppingCart />
               </span>
             </li>
       </div>
     ))}
+  {zoomedImage && (
+      <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
+        <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
+      </div>
+    )}
     </div>
 );
 };

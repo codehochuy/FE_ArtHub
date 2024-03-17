@@ -22,21 +22,21 @@ const Footer = () => {
               <div className="mb-4">
                 <div className="logo">
                   <div>
-                    <h1 className="text-2xl font-bold">Efurniture</h1>
+                    <h1 className="text-2xl font-bold">ArtWork</h1>
                   </div>
                 </div>
                 <p className="mt-4 text-gray-300">
-                  <span className="block leading-8">
+                  {/* <span className="block leading-8">
                     Tên công ty: Công ty CP một thành viên Lofi Furniture
-                  </span>
+                  </span> */}
                   <span className="block leading-8">
                     Địa chỉ: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh 700000
                   </span>
                   <span className="block leading-8">
-                    Email: efurniture@gmail.com
+                    Email: artwork2024@gmail.com
                   </span>
                   <span className="block leading-8">
-                    Hotline: 1900 8098
+                    Hotline: 1900 0091
                   </span>
                 </p>
               </div>
@@ -74,7 +74,7 @@ const Footer = () => {
                   </li>
                   <li className="mb-2 flex items-center">
                     <i className="ri-mail-line mr-2"></i>
-                    <p className="text-gray-300">efurniture@gmail.com</p>
+                    <p className="text-gray-300">artwork2024@gmail.com</p>
                   </li>
                 </ul>
               </div>
@@ -84,7 +84,7 @@ const Footer = () => {
 
         <div className="mt-8 text-center ">
           <p className="text-gray-300">
-            Copyright {year} developed by Efurniture. @All rights reserved.
+            Copyright {year} developed by ArtWork. @All rights reserved.
           </p>
         </div>
       </div>

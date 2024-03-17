@@ -24,9 +24,8 @@ import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import EditVoucherDetail from "../components/admin/voucher/EditVoucherDetail";
 // import Cart from "../pages/cart/Cart";
 // import Wishlist from "../pages/home/Wishlist";
-// import Order from "../pages/cart/Order";
+import Order from "../pages/cart/Order";
 import EditProfile from "../pages/login/EditProfile";
-
 const Routers = () => {
   return (
     <Routes>
@@ -64,6 +63,8 @@ const Routers = () => {
           </MainLayout>
         }
       />
+   
+      
       {/* <Route
         path="shop"
         element={
@@ -203,14 +204,14 @@ const Routers = () => {
           </MainLayout>
         }
       /> */}
-      {/* <Route
+      <Route
         path="order"
         element={
           <MainLayout>
             <Order />
           </MainLayout>
         }
-      /> */}
+      />
       <Route
         path="editProfile"
         element={

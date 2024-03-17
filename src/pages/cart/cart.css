@@ -89,3 +89,35 @@ button{
 button:nth-child(1){
     margin-top: 20px;
 }
+.buy_btn {
+    background-color: #020502; /* Màu nền */
+    border: none; /* Loại bỏ viền */
+    color: white; /* Màu chữ */
+    padding: 25px 50px; /* Kích thước nút */
+     text-align: center; /*Căn giữa chữ */
+    text-decoration: none; /* Loại bỏ gạch chân */
+    display: inline-block; /* Hiển thị như khối */
+    font-size: 16px; /* Kích thước chữ */
+    margin: 2px 2px; /*Khoảng cách */
+    cursor: pointer; /* Con trỏ khi di chuột */
+    border-radius: 8px; /* Độ cong cạnh */
+    /* margin-bottom: 200px; */
+
+    display: flex;  /*Hiển thị như flex container */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center;  /*Căn giữa theo chiều ngang */
+  }
+  
+  .buy_btn:hover {
+    background-color: #4a4a4a; /* Màu nền khi hover */
+  }
+  
+  .buy_btn:active {
+    background-color: #5c5c5c; /* Màu nền khi click */
+  }
+  
+  .buy_btn a {
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Loại bỏ gạch chân */
+  }
+  
