@@ -18,6 +18,7 @@
     const access_token = localStorage.getItem('access_token');
     const usersID = localStorage.getItem('usersID');
   if (access_token) {
+    console.log(access_token);
     return { 
       Authorization: 'Bearer ' + access_token, 
       'Content-Type': 'application/json',
