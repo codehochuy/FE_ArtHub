@@ -17,6 +17,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import userService from "../../../api/user.service";
+import authService from "../../../api/auth.service";
 import artworkService from "../../../api/artwork.service";
 // import Cart from "../pages/cart/Cart";
 import "./ArtWork.css"; // Import CSS styles for NewArrivals component
@@ -59,6 +60,7 @@ const ArtWorkPage = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const userId = localStorage.getItem("usersID");
+  // console.log("userid", userId);
   // const [userId, setUserId] = useState(localStorage.getItem("usersID"));
   const [zoomedImage, setZoomedImage] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -87,11 +89,7 @@ const ArtWorkPage = (props) => {
     // console.log("Adding artwork to cart. userId:", userId);
     userService.addToCart(
        { 
-          // productName: props.productName,
-          // price: props.price,
-          // quantity: 1,
           userId: userId,
-          // discount: props.discount,
           artworkId: String(artworkId),
          }  
       )
@@ -242,14 +240,15 @@ const ArtWorkPage = (props) => {
       >
         <p className="artwork-name">{artwork.artworkName}</p>
         <p className="artwork-postat">{new Date(artwork.postedAt).toLocaleDateString()}</p>
+
+
+
+
         <img 
-          src={artwork.artworkUrl}  
-          // style={{ maxWidth: `${zoomLevel * 600}px`, cursor: 'pointer' }} 
-          className="artwork-image"
-          onClick={() => handleImageClick(artwork.artworkUrl)}
-          // onMouseEnter={() => setIsImageHovered(true)}
-          // onMouseLeave={() => setIsImageHovered(false)}
-        />
+          src={artwork.artworkUrl}  />
+        
+
+
 
 
 
@@ -287,11 +286,11 @@ const ArtWorkPage = (props) => {
             </li>
       </div>
     ))}
-  {zoomedImage && (
+  {/* {zoomedImage && (
       <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
         <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
       </div>
-    )}
+    )} */}
      {showComment && <Comment />}
     </div>
 );

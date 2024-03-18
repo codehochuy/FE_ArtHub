@@ -2,21 +2,23 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
+// import homeCreator from "../pages/home/homeCreator";
 import Login from "../pages/login/Login";
-import Signup from "../pages/signup/Signup";
-import About from "../pages/about/About";
-import Booking from "../pages/booking/Booking";
-import Contact from "../pages/contact/Contact";
+// import Signup from "../pages/signup/Signup";
+// import About from "../pages/about/About";
+// import Booking from "../pages/booking/Booking";
+// import Contact from "../pages/contact/Contact";
 // import Shop from "../pages/shop/Shop";
 import Checkout from "../pages/checkout/Checkout";
 // import ProductDetails from "../pages/productDetails/ProductDetails";
 import MainLayout from "../components/layout/MainLayout";
-import AdminLayout from "../components/layout/AdminLayout";
-import ListArtWorks from "../components/admin/artwork/ListArtWorks";
+// import AdminLayout from "../components/layout/AdminLayout";
+// import ListArtWorks from "../components/admin/artwork/ListArtWorks";
 import ArtWork from "../components/home/ArtWork/ArtWork";
 import Cart from "../pages/cart/Cart";
+import ManageArtWork_C from "../components/creator/ManageArtWork_C";
 // import ListVouchers from "../components/admin/voucher/ListVouchers";
-import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
+// import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import CreateNewProduct from "../components/admin/product/CreateNewProduct";
 // import ViewProductDetail from "../components/admin/product/ViewProductDetail";
 // import EditProductDetail from "../components/admin/product/EditProductDetail";
@@ -25,7 +27,7 @@ import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import Cart from "../pages/cart/Cart";
 // import Wishlist from "../pages/home/Wishlist";
 import Order from "../pages/cart/Order";
-import EditProfile from "../pages/login/EditProfile";
+// import EditProfile from "../pages/login/EditProfile";
 const Routers = () => {
   return (
     <Routes>
@@ -40,6 +42,22 @@ const Routers = () => {
         }
       />
       <Route
+        path="manageartwork_c"
+        element={
+          <MainLayout>
+            <ManageArtWork_C />
+          </MainLayout>
+        }
+      />
+         {/* <Route
+        path="homeCreator"
+        element={
+          <MainLayout>
+            <homeCreator />
+          </MainLayout>
+        }
+      /> */}
+      <Route
         path="login"
         element={
           <MainLayout>
@@ -47,14 +65,14 @@ const Routers = () => {
           </MainLayout>
         }
       />
-      <Route
+      {/* <Route
         path="signup"
         element={
           <MainLayout>
             <Signup />
           </MainLayout>
         }
-      />
+      /> */}
         <Route
         path="ArtWork"
         element={
@@ -81,30 +99,30 @@ const Routers = () => {
           </MainLayout>
         }
       /> */}
-      <Route
+      {/* <Route
         path="about"
         element={
           <MainLayout>
             <About />
           </MainLayout>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="contact"
         element={
           <MainLayout>
             <Contact />
           </MainLayout>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="booking"
         element={
           <MainLayout>
             <Booking />
           </MainLayout>
         }
-      />
+      /> */}
       <Route
         path="checkout"
         element={
@@ -113,30 +131,30 @@ const Routers = () => {
           </MainLayout>
         }
       />
-      <Route
+      {/* <Route
         path="admin"
         element={
           <AdminLayout>
             <AdminDashboard />
           </AdminLayout>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="admin/dashboard"
         element={
           <AdminLayout>
             <AdminDashboard />
           </AdminLayout>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="ArtWorkPage"
         element={
           <MainLayout>
             <ListArtWorks />
           </MainLayout>
         }
-      />
+      /> */}
 
       {/* <Route
         path="admin/products/create"
@@ -212,14 +230,14 @@ const Routers = () => {
           </MainLayout>
         }
       />
-      <Route
+      {/* <Route
         path="editProfile"
         element={
           <MainLayout>
             <EditProfile />
           </MainLayout>
         }
-      />
+      /> */}
     </Routes>
   );
 };

@@ -8,15 +8,15 @@
 //     }
 //   }
 // export default function authHeader() {
-  const authHeader = () => {
-  const access_token = localStorage.getItem('access_token');
-  const usersID = localStorage.getItem('usersID');
+
 
 
   // console.log('userid' , usersID);
   
   // console.log('access_token:', access_token);
-
+  const authHeader = () => {
+    const access_token = localStorage.getItem('access_token');
+    const usersID = localStorage.getItem('usersID');
   if (access_token) {
     return { 
       Authorization: 'Bearer ' + access_token, 

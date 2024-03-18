@@ -19,21 +19,15 @@ const login = (email, password) => {
     })
     .then((response) => {
       const { access_token, userInfo } = response.data; 
-      // if (token) {
-      //   localStorage.setItem("user", JSON.stringify(response.data));
-      // }
       if (access_token) {
         localStorage.setItem("access_token", access_token);
         localStorage.setItem("usersID", userInfo.usersID);
-        // console.log("UserID:", userInfo.usersID); // Thêm console log ở đây
-
       }
       return response.data;
     })
-   
     .catch((error) => {
       console.error("Error while logging in:", error);
-      throw error; // Rethrow the error to handle it in the caller
+      throw error; 
     });
 };
 
@@ -49,9 +43,19 @@ const loginGoogle = (accessToken) => {
       return response.data;
     });
 };
+
 const logout = () => {
-  localStorage.removeItem("user");
+  // localStorage.clear(); 
 };
+  // Cập nhật state trong useState
+  // setOrders([]); // Ví dụ: Nếu orders là state của bạn
+  // setOrderdetails([]); // Ví dụ: Nếu orderdetails là state của bạn
+  // setCarts([]);
+  
+  // Cập nhật tất cả các state khác tương tự nếu cần
+
+
+
 
 const isLoggedIn = () => {
   const user = JSON.parse(localStorage.getItem("user"));

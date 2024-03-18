@@ -6,7 +6,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { logom } from "../../assets/images/index";
 import Image from "../designLayouts/Image";
-import { navBarList } from "../../constants/index";
+// import { navBarList } from "../../constants/index";
 import Flex from "../designLayouts/Flex";
 import { useIsLogin } from "../../hooks/useIsLogin";
 
@@ -38,7 +38,7 @@ const Header = () => {
               <Image className="w-20 object-cover" imgSrc={logom} />
             </div>
           </Link>
-          <div>
+          {/* <div>
             {showMenu && (
               <motion.ul
                 initial={{ y: 30, opacity: 0 }}
@@ -150,7 +150,7 @@ const Header = () => {
                 </motion.div>
               </div>
             )}
-          </div>
+          </div> */}
         </Flex>
       </nav>
     </div>

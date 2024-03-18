@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/v1/user/";
-// const BASE_URL = "http://localhost:8080/api/v1/"
+const CREATOR_URL = "http://localhost:8080/api/v1/creator/";
 const userId = localStorage.getItem("usersID");
 
 // const getPublicContent = () => {
@@ -64,13 +64,28 @@ const viewOrder = (audienceId) => {
   return axios.get(API_URL + "order/" + audienceId, { headers: authHeader() });
 };
 const createLike = (data) => {
-  return axios.post(API_URL + "createLike",  data , { headers: authHeader() })
+  return axios.post(API_URL + "Like",  data , { headers: authHeader() })
 };
 const getComment = () => {
   return axios.get(API_URL + "getallComment" , { headers: authHeader() })
 };
 const viewOrderDetail = (orderId) => {
   return axios.get(API_URL + "orderDetail/" + orderId, { headers: authHeader() })
+};
+const createArtWork = (formData) => {
+  return axios.post(CREATOR_URL + "create2", formData , { headers: authHeader() });
+};
+export default {
+  addToCart,
+  getCart,
+ viewOrder,
+ viewOrderDetail,
+  createOrder,
+  createOrderDetail,
+  remove_from_cart,
+  createLike,
+  getComment,
+  createArtWork,
 };
 
 
@@ -111,26 +126,17 @@ const viewOrderDetail = (orderId) => {
 // const updateCart = () => {
 //   return axios.get(API_URL + "updatecart", { headers: authHeader() });
 // };
-export default {
+
   // getPublicContent,
   // getUserBoard,
   // getModeratorBoard,
   // getAdminBoard,
-  addToCart,
-  getCart,
+  
   // getWishlist,
   // addToWishlist,
   // deleteCart,
   // applyCoupon,
   // postOrder,
   // emptyCart,
- viewOrder,
- viewOrderDetail,
+
   // updateCart,
-  createOrder,
-  createOrderDetail,
-  remove_from_cart,
-  viewOrder,
-  createLike,
-  getComment,
-};

@@ -18,7 +18,7 @@ const Cart = () => {
   // const [cartTotal, setCartTotal] = useState("");
   const [carts, setCarts] = useState([]);
   // const [load, setLoad] = useState(null);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const navigate = useNavigate();
 //   const [usedVouchers, setUsedVouchers] = useState([]);
 
@@ -40,6 +40,8 @@ const Cart = () => {
     };
     fetchData();
   }, []);
+
+  
 
 
   // isLoggedIn,navigate

@@ -39,17 +39,17 @@ const LogIn = () => {
       .required("Password is required"),
   });
 
-  const SignInMail = () => {
-    const providerGoogle = new GoogleAuthProvider();
-    signInWithPopup(auth, providerGoogle)
-      .then(function (result) {
-      })
-      .catch(function (error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-      });
-  };
+  // const SignInMail = () => {
+  //   const providerGoogle = new GoogleAuthProvider();
+  //   signInWithPopup(auth, providerGoogle)
+  //     .then(function (result) {
+  //     })
+  //     .catch(function (error) {
+  //       var errorCode = error.code;
+  //       var errorMessage = error.message;
+  //       console.error(errorCode, errorMessage);
+  //     });
+  // };
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(false);
@@ -63,6 +63,10 @@ const LogIn = () => {
         } else if (user.user.userInfo.role === 'AUDIENCE') {
           navigate('/home')
         }
+        else if (user.user.userInfo.role === 'CREATOR') {
+          navigate('/home')
+        }
+        window.location.reload();
 
         // window.location.reload();
       })
@@ -76,7 +80,7 @@ const LogIn = () => {
   // }
   if (isLoggedIn) {
     // return <Redirect to="/ArtWorkPage" />; // Nếu đã đăng nhập, chuyển hướng người dùng đến trang ArtWorkPage
-    return <Navigate to="/ArtWorkPage" />;
+    return <Navigate to="/ArtWork" />;
   }
 
   return (
@@ -131,6 +135,7 @@ const LogIn = () => {
                   </label>
                   <Field
                     name="email"
+                    value="huypt160548@fpt.edu.vn"
                     type="text"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />

@@ -155,7 +155,7 @@ const [zoomedImage, setZoomedImage] = useState(null);
                   
                 </table>
               ) : (
-                <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Chưa có đơn hàng</h2>
+                <h2 className="fs-4 text-center" style={{marginLeft:"0px", marginBottom:"300px"}}>Chưa có đơn hàng</h2>
               )}
             </Col>
   </Row>

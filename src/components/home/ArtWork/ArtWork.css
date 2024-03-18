@@ -70,13 +70,15 @@
     margin-bottom: 10px;
   }
 
-  
   .artwork-image {
-    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của div */
-    margin-bottom: 15px; /* Khoảng cách giữa hình ảnh và các phần tử khác */
-    border-top: 1px solid #ccc; /* Đường kẻ trên */
-    border-bottom: 1px solid #ccc; /* Đường kẻ dưới */
+    max-width: 1080px; /* Giới hạn chiều rộng tối đa của hình ảnh là 1080px */
+    max-height: none; /* Xóa giới hạn chiều cao tối đa */
+    width: 100%; /* Đảm bảo rằng chiều rộng của ảnh sẽ tự động kéo dãn tới 1080px */
+    height: auto; /* Đảm bảo rằng chiều cao của ảnh sẽ tự động điều chỉnh tương ứng với chiều cao ban đầu */
   }
+  
+  
+  
   .artwork-info-container {
     display: flex;
     justify-content: space-between; /* Các phần tử sẽ được căn đều với nhau và căn cách tuyệt đối giữa chúng */

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaSearch, FaUserCircle, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
-import { paginationItems } from "../../constants/index";
+// import { paginationItems } from "../../constants/index";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useIsLogin } from "../../hooks/useIsLogin";
@@ -27,17 +27,17 @@ const HeaderBottom = () => {
       }
     });
   }, [show, ref]);
-    const [listArtWorks, setListArtWork] = useState([]);
-    useEffect(() => {
-      authService.getArtWork().then((data) => {
-        // console.log(data);
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          setListArtWork(data.data.data);
-        }
-      });
-    }, []);
+    // const [listArtWorks, setListArtWork] = useState([]);
+    // useEffect(() => {
+    //   authService.getArtWork().then((data) => {
+    //     // console.log(data);
+    //     if (data.error) {
+    //       console.log(data.error);
+    //     } else {
+    //       setListArtWork(data.data.data);
+    //     }
+    //   });
+    // }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredArtworks, setFilteredArtWork] = useState([]);
   // console.log("🚀 ~ HeaderBottom ~ filteredProducts:", filteredProducts)
@@ -47,24 +47,24 @@ const HeaderBottom = () => {
     setSearchQuery(e.target.value);
   };
 
-  useEffect(() => {
-    const filtered = listArtWorks.filter((item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredArtWork(filtered);
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   const filtered = listArtWorks.filter((item) =>
+  //     item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  //   );
+  //   setFilteredArtWork(filtered);
+  // }, [searchQuery]);
 
 
-  const totalQuantity = useSelector(state => state.cart.totalQuantity)
-  const handleLogOut = () => {
-    dispatch(logout())
-      .unwrap()
-      .then(() => {
-        navigate("/login");
-      })
-      .catch(() => {
-      });
-  };
+  // const totalQuantity = useSelector(state => state.cart.totalQuantity)
+  // const handleLogOut = () => {
+  //   dispatch(logout())
+  //     .unwrap()
+  //     .then(() => {
+  //       navigate("/login");
+  //     })
+  //     .catch(() => {
+  //     });
+  // };
   return (
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
@@ -205,10 +205,24 @@ const HeaderBottom = () => {
                 </span> */}
               </div>
             </Link>
+
+           
+
           </div>
+          <Link to="/manageartwork_c">
+              <div className="relative">
+                <FaShoppingCart />
+                {/* <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
+                  {totalQuantity}
+                </span> */}
+              </div>
+            </Link>
         </Flex>
+        
       </div>
+      
     </div>
+    
   );
 };
 
