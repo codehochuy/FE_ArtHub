@@ -1,0 +1,16 @@
+.order-image {
+    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của div */
+    margin-bottom: 15px; /* Khoảng cách giữa hình ảnh và các phần tử khác */
+    border-top: 1px solid #ccc; /* Đường kẻ trên */
+    border-bottom: 1px solid #ccc; /* Đường kẻ dưới */
+  }
+  .order_container {
+    /* display: flex; */
+    justify-content: center; /* Để căn giữa theo chiều ngang */
+    align-items: center; /* Để căn giữa theo chiều dọc */
+    height: 100vh; /* Để lấp đầy chiều cao của trang */
+    margin-left: 100px;
+  }
+  
+  /* Thêm các kiểu khác cho container nếu cần */
+  

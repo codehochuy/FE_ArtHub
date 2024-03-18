@@ -2,35 +2,178 @@ import { useEffect, useState } from "react";
 import "./order.css";
 import { Col, Container, Row } from "reactstrap";
 import userService from "../../api/user.service";
+import React from 'react';
 import { format } from "date-fns";
+const usersID = localStorage.getItem('usersID');
+
 
 const Order = () => {
-  const [ordes, setOrders] = useState([]);
-  const [load, setLoad] = useState(null);
-  // useEffect(() => {
-  //   authService.getOrder().then((data) => {
-  //     if (data.error) {
-  //       console.log(data.error);
-  //     } else {
-  //       console.log(data.data);
-  //       setListCart(data.data);
-  //     }
-  //   });
-  // }, [load]);
+const [orders, setOrders] = useState([]);
+const [orderdetails, setOrderdetails] = useState([]);
+const [orderDetailsMap, setOrderDetailsMap] = useState({});
+const [zoomedImage, setZoomedImage] = useState(null);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await userService.getCart();
+        const response = await userService.viewOrder(usersID);
         setOrders(response.data);
         // console.log("Response:", response.data);
       } catch (error) {
         console.error("Error fetching artworks:", error);
       }
-   
-
     };
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData2 = async () => {
+  //     try {
+  //       const response2 = await userService.viewOrderDetail(order.orderId);
+  //       setOrders(response2.data);
+  //       console.log("Response:", response2.data);
+  //     } catch (error) {
+  //       console.error("Error fetching artworks:", error);
+  //     }
+  //   };
+  //   fetchData2();
+  // }, []);
+  // const viewOrderDetail = async (orderId) => {
+  //   try {
+  //     const response2 = await userService.viewOrderDetail(orderId);
+  //     setOrderdetails(response2.data);
+  //     console.log("Response:", response2.data);
+  //   } catch (error) {
+  //     console.error("Error fetching artworks:", error);
+  //   }
+  // };
+  const viewOrderDetail = async (orderId) => {
+    try {
+      const response = await userService.viewOrderDetail(orderId);
+      setOrderDetailsMap({ ...orderDetailsMap, [orderId]: response.data });
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+    }
+  };
+  const handleImageClick = (imageUrl) => {
+    setZoomedImage(imageUrl);
+  };
+  const handleZoomedImageOverlayClick = () => {
+    setZoomedImage(null);
+  };
+  function formatPrice(price) {
+    // Chuyển giá thành chuỗi và đảm bảo đó là số
+    price = parseFloat(price).toFixed(0).toString();
+  
+    // Sử dụng regex để thêm dấu chấm sau mỗi 3 chữ số từ cuối cùng
+    return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
+  }
+
+
+
+  return (
+    <div className="order_container">
+    {/* <div style={{ marginLeft: '50px' , marginRight: '50px'}}> */}
+      <section className="pt-9 pb-9">
+        <Container className="pl-8 pr-8">
+          <Row className="d-flex">
+            <Col lg="11">
+            {orders && orders.length > 0 ? (
+              //  {orders ? (
+                <table className="table bordered">
+                  <thead>
+                    <tr>
+                    <th>STT</th>
+                      <th>Thời gian đặt hàng</th>
+                      <th>Giá trị đơn hàng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    {orders.map((order, index) => (
+                    //  <tr key={index}>
+                    <React.Fragment key={index}>
+      <tr>
+        <td>{order.orderId}</td>
+        <td>{order.orderDate}</td>
+        {/* <td>{order.orderPrice}</td> */}
+        <td>{formatPrice(order.orderPrice)}</td>
+        <td>
+          <button onClick={() => viewOrderDetail(order.orderId)}>Xem chi tiết</button>
+        </td>
+      </tr>
+      {/* {orderdetails && orderdetails.length > 0 && orderdetails[0].orderId === order.orderId && ( */}
+      {orderDetailsMap[order.orderId] && orderDetailsMap[order.orderId].length > 0 && orderDetailsMap[order.orderId][0].order.orderId === order.orderId && (
+  <tr>
+    <td colSpan="4">
+      <div>
+    
+        <table className="table bordered">
+          {/* <thead> */}
+            {/* <tr> */}
+              {/* <th>STT</th> */}
+           
+              {/* <th>Artwork Name</th>
+              <th>Artwork Url</th>
+              <th>Order Detail Price</th> */}
+            {/* </tr> */}
+          {/* </thead> */}
+          <tbody>
+            {orderDetailsMap[order.orderId].map((detail, index) => (
+              <tr key={index}>
+                {/* <td>{index + 1}</td> */}
+                
+                <td>{detail.artwork.artworkName}</td>
+                {/* <td>{detail.artwork.artworkUrl}</td> */}
+                <img 
+          src={detail.artwork.artworkUrl}  
+          // style={{ maxWidth: `${zoomLevel * 600}px`, cursor: 'pointer' }} 
+          className="order-image"
+          onClick={() => handleImageClick(detail.artwork.artworkUrl)}
+          // onMouseEnter={() => setIsImageHovered(true)}
+          // onMouseLeave={() => setIsImageHovered(false)}
+        />
+                {/* <td>{detail.orderDetailPrice}</td> */}
+                <td>{formatPrice(detail.orderDetailPrice)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </td>
+  </tr>
+)}
+
+    </React.Fragment>
+                     ))} 
+
+
+                  </tbody>
+
+                  
+                </table>
+              ) : (
+                <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Chưa có đơn hàng</h2>
+              )}
+            </Col>
+  </Row>
+        </Container>
+      </section>
+      {zoomedImage && (
+      <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
+        <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
+      </div>
+    )}
+
+    {/* </div> */}
+    </div>
+  );
+ 
+  };
+  export default Order;
+  
 
 
 
@@ -107,75 +250,3 @@ const Order = () => {
 //     </div>
 //   );
 // };
-return (
-  <div style={{ marginLeft: '50px' , marginRight: '50px'}}>
-    <section className="pt-9 pb-9">
-      <Container className="pl-8 pr-8">
-        <Row className="d-flex">
-          <Col lg="9">
-            {ordes && ordes.length > 0 ? (
-              <table className="table bordered">
-                <thead>
-                  <tr>
-                  <th>STT</th>
-                    <th>Tên tác phẩm</th>
-                    <th>Ảnh tác phẩm</th>
-                    {/* <th>Ngày tạo</th> */}
-                    <th>Giá</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {carts.map((cart, index) => (
-                    <tr key={cart.cartId}>
-                       <td>{index +1}</td>
-                       <td>{cart.artwork.artworkName}</td>
-                       <img src={cart.artwork.artworkUrl} alt="" style={{ maxWidth: '250px' }} />
-                       {/* <td>{formatDate(cart.artwork.postedAt)}</td> */}
-                       <td>{formatPrice(cart.artwork.price)}</td>
-                       <td>
-                       <button onClick={() => handleRemoveFromCart(cart.cartId)}>Delete</button>
-</td>
-                    </tr>
-                  ))}
-                </tbody>
-           
-              </table>
-            ) : (
-              <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
-
-            )}
-          </Col>
-          {ordes.length > 0 && (
-             <Col lg="3">
-            <div>
-              <h6 className="d-flex align-items-center justify-content-between">
-              Tổng: <span className="fs-4 fw-bold">{TotalPrice()}</span>
-              </h6>
-            </div>
-            <p className="fs-5 mt-2">
-            </p>
-            
-              <div style={{ marginBottom: "300px" }}>
-                <div className="relative mt-6">
-                  <div className="absolute inset-y-1 right-1 flex justify-end">
-                    <button className="buy_btn mt-3 w-100">
-                      <Link to="/checkout">Thanh toán</Link>
-                    </button>
-                    <button className="buy_btn mt-3 w-100">
-                      <Link to="/home">Trở về</Link>
-                    </button>
-                  </div>
-                </div>
-              </div>
-           
-          </Col>
-           )}
-        </Row>
-      </Container>
-    </section>
-  </div>
-);
-};
-
-export default Order;

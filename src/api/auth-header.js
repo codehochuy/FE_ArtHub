@@ -11,7 +11,6 @@
   const authHeader = () => {
   const access_token = localStorage.getItem('access_token');
   const usersID = localStorage.getItem('usersID');
-  const audience = localStorage.getItem('usersID');
 
 
   // console.log('userid' , usersID);

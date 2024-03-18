@@ -60,7 +60,18 @@ const createOrderDetail = (data) => {
 const remove_from_cart = (cartId) => {
   return axios.delete(API_URL + "remove-from-cart/" + cartId, { headers: authHeader() });
 };
-
+const viewOrder = (audienceId) => {
+  return axios.get(API_URL + "order/" + audienceId, { headers: authHeader() });
+};
+const createLike = (data) => {
+  return axios.post(API_URL + "createLike",  data , { headers: authHeader() })
+};
+const getComment = () => {
+  return axios.get(API_URL + "getallComment" , { headers: authHeader() })
+};
+const viewOrderDetail = (orderId) => {
+  return axios.get(API_URL + "orderDetail/" + orderId, { headers: authHeader() })
+};
 
 
 
@@ -75,9 +86,7 @@ const remove_from_cart = (cartId) => {
 
 
 
-const getOrder = () => {
-  return axios.get(API_URL + "getallorders", { headers: authHeader() });
-};
+
 // const deleteCart = (id) => {
 //   return axios.delete(API_URL + `cart/${id}`, { headers: authHeader() });
 // };
@@ -115,9 +124,13 @@ export default {
   // applyCoupon,
   // postOrder,
   // emptyCart,
-  getOrder,
+ viewOrder,
+ viewOrderDetail,
   // updateCart,
   createOrder,
   createOrderDetail,
   remove_from_cart,
+  viewOrder,
+  createLike,
+  getComment,
 };

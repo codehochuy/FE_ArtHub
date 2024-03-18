@@ -14,7 +14,7 @@ import { addToCart } from "../../../redux/slice/productSlice";
 import { cartActions } from "../../../redux/slice/cartSlice";
 import { toast, ToastContainer } from 'react-toastify'
 // import authService from "../../../api/user.service";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import userService from "../../../api/user.service";
 import artworkService from "../../../api/artwork.service";
@@ -23,6 +23,7 @@ import "./ArtWork.css"; // Import CSS styles for NewArrivals component
 // import NewArrivals from "../newArrivals/NewArrivals";
 // import NewArrivals from "../newArrivals/NewArrivals";
 import { FaHeart } from 'react-icons/fa';
+import Comment from "./Comment/Comment";
 
 
 
@@ -62,7 +63,9 @@ const ArtWorkPage = (props) => {
   const [zoomedImage, setZoomedImage] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isImageClicked, setIsImageClicked] = useState(false);
-
+  // const [comments, setComments] = useState([]);
+  const [showComment, setShowComment] = useState(false);
+  const commentRef = useRef(null);
 
 
   useEffect(() => {
@@ -70,8 +73,6 @@ const ArtWorkPage = (props) => {
       try {
         const response = await artworkService.getArtWork();
         setArtWorks(response.data);
-
-      
       } catch (error) {
         console.error("Error fetching artworks:", error);
       }
@@ -147,6 +148,65 @@ const ArtWorkPage = (props) => {
     // Sử dụng regex để thêm dấu chấm sau mỗi 3 chữ số từ cuối cùng
     return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
   }
+
+
+  const handleLikeClick = (artworkId) => {
+    createLike(userId, artworkId);
+  };
+
+  
+
+  const createLike = (userId, artworkId) => {
+    userService.createLike({ userId: userId, artworkId: artworkId })
+      .then((response) => {
+        // Nếu thành công, cập nhật số lượt like của bài viết
+        if (response.data && response.data.success) {
+          const updatedArtWorks = artWorks.map(artwork => {
+            if (artwork.artworkId === artworkId) {
+              return { ...artwork, likeCount: artwork.likeCount + 1 };
+            }
+            return artwork;
+          });
+          setArtWorks(updatedArtWorks);
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating like:", error);
+        toast.error("Đã xảy ra lỗi khi tăng lượt thích. Vui lòng thử lại sau.", {
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  };
+
+  const toggleComment = () => {
+    setShowComment(!showComment); // Đảo ngược giá trị của showComment khi click
+  };
+  const closeComment = () => {
+    setShowComment(false);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (commentRef.current && !commentRef.current.contains(event.target)) {
+        closeComment();
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [commentRef]);
+
+
+
+
   
   
   
@@ -174,8 +234,10 @@ const ArtWorkPage = (props) => {
           marginLeft: '300px', 
           marginRight: '300px', 
           marginBottom:'25px',
-          borderRadius: '10px', // Bo các góc
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' // Hiệu ứng bề mặt nổi
+          borderRadius: '10px', 
+          // Bo các góc
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)' 
+          // Hiệu ứng bề mặt nổi
         }}
       >
         <p className="artwork-name">{artwork.artworkName}</p>
@@ -185,24 +247,32 @@ const ArtWorkPage = (props) => {
           // style={{ maxWidth: `${zoomLevel * 600}px`, cursor: 'pointer' }} 
           className="artwork-image"
           onClick={() => handleImageClick(artwork.artworkUrl)}
-          onMouseEnter={() => setIsImageHovered(true)}
-          onMouseLeave={() => setIsImageHovered(false)}
+          // onMouseEnter={() => setIsImageHovered(true)}
+          // onMouseLeave={() => setIsImageHovered(false)}
         />
 
 
 
 <div className="artwork-info-container">
+<div className="artwork-like" onClick={() => handleLikeClick(artwork.artworkId)}>
+             <button> <FaHeart className="heart-icon" /></button>
+              <span className="like-count">{artwork.likeCount}</span>
+            </div>
+
+            <div className="artwork-comment">
+   <button onClick={toggleComment}>{artwork.commentCount} Bình luận</button>
  
-<div className="artwork-like">
-  <FaHeart className="heart-icon" />
-  <span className="like-count">{artwork.likeCount}</span>
-</div>
+   {showComment && (
+        <div className="comment-overlay" ref={commentRef}>
+          <div className="comment-container">
+            <button onClick={closeComment}>Đóng</button>
+            <Comment />
+          </div>
+        </div>
+      )}
+    </div>
 
 
-
-
-
-  <div className="artwork-comment">{artwork.commentCount} bình luận </div>
   <div className="artwork-price">{formatPrice(artwork.price)}</div>
 </div>
 
@@ -222,6 +292,7 @@ const ArtWorkPage = (props) => {
         <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
       </div>
     )}
+     {showComment && <Comment />}
     </div>
 );
 };

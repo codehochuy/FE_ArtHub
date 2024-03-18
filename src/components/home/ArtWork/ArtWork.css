@@ -92,11 +92,35 @@
     align-items: center; 
     margin-right: 5px;
   }
+  .artwork-like button {
+    padding: 0; /* Xóa padding mặc định của button */
+    margin-bottom: 18px; /* Xóa margin mặc định của button */
+    border: none; /* Xóa viền của button */
+    background: none; /* Xóa nền của button*/
+    width: fit-content; /* Đặt chiều rộng của button sao cho vừa khít với nội dung bên trong */
+  }
+  
+  .artwork-like .heart-icon {
+    font-size: 20px; /* Điều chỉnh kích thước của icon sao cho phù hợp */
+    color: red; /* Đặt màu cho icon */
+  }
+  
+  
   
   .artwork-comment {
     order: 2; /* Sắp xếp phần tử này ở vị trí thứ hai */
     font-size: 16px;
+    margin-bottom: 18px;
   }
+  .artwork-comment button {
+    background: none;
+    border: none;
+    padding: 0;
+    /* margin-top: 500px; */
+    color: black;
+    cursor: pointer;
+  }
+  
   
   .artwork-price {
     order: 3; /* Sắp xếp phần tử này ở vị trí cuối cùng */
@@ -111,6 +135,9 @@
   .like-count {
     margin-left: 5px;
   }
+
+ 
+  
   
   
   
