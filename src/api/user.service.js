@@ -81,12 +81,13 @@ const getArtWork = (creatorId) => {
 const deleteArtWork = (artworkid) => {
   return axios.delete(CREATOR_URL + artworkid , { headers: authHeader() });
 };
-// const updateArtWork = (artworkid, data) => {
-//   return axios.put(CREATOR_URL + "updateArtwork/" + artworkid , data, { headers: authHeader() });
-// };
 const updateArtWork = (artworkId, data) => {
   return axios.put(`${CREATOR_URL}updateArtwork/${artworkId}`, data, { headers: authHeader() });
 };
+const top_up = (userId, data) => {
+  return axios.put(`${API_URL}${userId}/balance`, data, { headers: authHeader() });
+};
+
 export default {
   addToCart,
   getCart,
@@ -101,6 +102,7 @@ export default {
   getArtWork,
   deleteArtWork,
   updateArtWork,
+  top_up,
 };
 
 

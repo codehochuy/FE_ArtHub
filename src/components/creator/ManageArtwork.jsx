@@ -2,32 +2,58 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CreateArtwork from './CreateArtwork';
 import GetArtwork from './GetArtwork';
+import PaymentWallet from './PaymentWallet';
+
 import "./manageArtwork.css";
+import { left } from '@cloudinary/url-gen/qualifiers/textAlignment';
 
 const ManageArtwork = () => {
     const [showCreateArtwork, setShowCreateArtwork] = useState(false); 
     const [showGetArtwork, setShowGetArtwork] = useState(false); 
+    const [showPaymentWallet, setShowPaymentWallet] = useState(false); 
+   
 
     const handleCreateArtworkClick = () => {
         setShowCreateArtwork(true); 
-        setShowGetArtwork(false); // Ẩn GetArtwork khi hiển thị CreateArtwork
+        setShowGetArtwork(false); 
+        setShowPaymentWallet(false);
     };
     const handleGetArtworkClick = () => {
         setShowGetArtwork(true); 
-        setShowCreateArtwork(false); // Ẩn CreateArtwork khi hiển thị GetArtwork
+        setShowCreateArtwork(false); 
+        setShowPaymentWallet(false);
+    };
+
+    const handleGetPaymentWalletClick = () => {
+        setShowPaymentWallet(true); 
+        setShowCreateArtwork(false); 
+        setShowGetArtwork(false); 
     };
 
 
     return (
-        <div className="manage-artwork-container">  
-        <h2>Manage Artwork</h2>
-        <Link to="#" onClick={handleCreateArtworkClick}>Tạo artwork</Link> 
-        <Link to="#" onClick={handleGetArtworkClick}>Get artwork</Link>
         
+        <div className="grid-container">
+        <div className="left-half">
+        <h2>User</h2><br></br>
+        
+        <Link to="#" onClick={handleCreateArtworkClick}>Tạo tác phẩm</Link> <br></br>
+        <Link to="#" onClick={handleGetArtworkClick}>Quản lí tác phẩm</Link><br></br>
+        <Link to="#" onClick={handleGetPaymentWalletClick}>Ví thanh toán</Link><br></br>
+        </div>
+
+        
+        <div className="right-half">
+        <div>
         {showCreateArtwork && <CreateArtwork />} 
             {showGetArtwork && <GetArtwork />} 
-        </div>
-   
+            {showPaymentWallet && <PaymentWallet/>}
+            </div>
+            </div>
+
+
+            </div>
+       
         
     );
 };

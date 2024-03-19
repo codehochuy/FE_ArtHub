@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import userService from '../../api/user.service';
 import './createArtwork.css'; 
+import { Col, Container, Row } from "reactstrap";
+import { toast } from "react-toastify";
 
 const CreateArtWork = () => {
     const [artworkName, setArtworkName] = useState('');
@@ -24,8 +26,40 @@ const CreateArtWork = () => {
     const createArtWork = (requestData) => {
         userService.createArtWork(requestData)
         .then((response) => {
-            console.log(response.data); 
-        });
+            if (response.data.status === 'Create Artwork Successfully') {
+              toast.success("Thành công", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+              
+            } else {
+              toast.error("Thất bại", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+            }
+          })
+          .catch(() => {
+            toast.error("Thất bại", {
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+          });
     };
 
     const handleFileChange = (e) => {
@@ -40,17 +74,26 @@ const CreateArtWork = () => {
     };
 
     return (
-        <div className="create-artwork-container">
-            <h2>Create Artwork</h2>
-            
+     
+    
+
+        <div>
             <form onSubmit={handleSubmit}>
-                <div>
+            <div>
                     <label>Tên tác phẩm</label>
-                    <input type="text" value={artworkName} onChange={(e) => setArtworkName(e.target.value)} />
+                    <input value={artworkName} onChange={(e) => setArtworkName(e.target.value)} 
+              className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
+              type="text"
+              placeholder="Nhập tên tác phẩm"
+            />
                 </div>
                 <div>
                     <label>Giá</label>
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <input value={price} onChange={(e) => setPrice(e.target.value)}
+              className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
+              type="number"
+              placeholder="Giá"
+            />
                 </div>
                 <div>
                     <label>Ảnh tác phẩm</label>
@@ -63,3 +106,33 @@ const CreateArtWork = () => {
 };
 
 export default CreateArtWork;
+
+
+
+// return (
+       
+//     <div className="create-artwork-container">
+        
+        
+//         <form onSubmit={handleSubmit}>
+//             <div>
+//                 <label>Tên tác phẩm</label>
+//                 <input type="text" value={artworkName} onChange={(e) => setArtworkName(e.target.value)} />
+//                 <input
+//           className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
+//           type="text"
+//           placeholder="Search your Artworks here"
+//         />
+//             </div>
+//             <div>
+//                 <label>Giá</label>
+//                 <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+//             </div>
+//             <div>
+//                 <label>Ảnh tác phẩm</label>
+//                 <input type="file" onChange={handleFileChange} />
+//             </div>
+//             <button type="submit">Submit</button>
+//         </form>
+//     </div>
+// );

@@ -8,14 +8,17 @@ import ArtWork from "../../components/home/ArtWork/ArtWork";
 // import YearProduct from "../../components/home/yearProduct/YearProduct";
 // import SpecialOffers from "../../components/home/specialOffers/SpecialOffers";
 // import Clock from "../../components/home/clock/Clock";
+import "./home.css";
 
 
 const Home = () => {
   const year = new Date().getFullYear();
   return (
+  
     <div className='w-full mx-auto'>
       {/* <Banner/> */}
       <div className="max-w-container mx-auto px-4">
+      
       {/* <Sale /> */}
       {/* <NewArrivals /> */}
       {/* <BestSellers /> */}
@@ -24,7 +27,8 @@ const Home = () => {
       
       {/* <SpecialOffers /> */}
       {/* <Clock/> */}
-      </div>
+     
+    </div>
     </div>
   );
 };

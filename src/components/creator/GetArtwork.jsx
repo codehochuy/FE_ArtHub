@@ -37,10 +37,9 @@ const GetArtwork = () => {
       const handleRemove = (artworkId) => {
         userService.deleteArtWork(artworkId)
             .then((response) => {
-              // console.log(response);
-              if (response.data && response.data.status === 'Deleted ArtWork Successfully') {
-                toast.success("Xoá thành công", {
-                  autoClose: 3000,
+              if (response.data.status === 'Deleted ArtWork Successfully') {
+                toast.success("Thành công", {
+                  autoClose: 1000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: false,
@@ -48,10 +47,9 @@ const GetArtwork = () => {
                   progress: undefined,
                   theme: "dark",
                 });
-                window.location.reload();
               } else {
-                toast.error("Xoá thất bại", {
-                  autoClose: 3000,
+                toast.error("Thất bại", {
+                  autoClose: 1000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: false,
@@ -59,11 +57,19 @@ const GetArtwork = () => {
                   progress: undefined,
                   theme: "dark",
                 });
-                window.location.reload();
+               
               }
             })
-            .catch((error) => {
-                console.error("Error deleting cart item:", error);
+            .catch(() => {
+              toast.error("Thất bại", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
             });
     };
     //handle open input update
@@ -73,6 +79,7 @@ const GetArtwork = () => {
   };
 //handle update artwork
 const handleUpdateArtwork = (artworkId) => {
+  if (updatedPrice || selectedArtwork.artworkName >= 10000) {
   const updatedArtwork = {
     artworkName: updatedArtworkName || selectedArtwork.artworkName,
     price: updatedPrice || selectedArtwork.price
@@ -82,8 +89,8 @@ const handleUpdateArtwork = (artworkId) => {
       .then(response => {
         console.log(response)
         if (response.data && response.data.status === 'Update ArtWork Successfully') {
-          toast.success("Cập nhật thành công", {
-            autoClose: 3000,
+          toast.success("Thành công", {
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -91,10 +98,11 @@ const handleUpdateArtwork = (artworkId) => {
             progress: undefined,
             theme: "dark",
           });
+          
           // window.location.reload();
         } else {
-          toast.error("Cập nhật thất bại", {
-            autoClose: 3000,
+          toast.error("Thất bại", {
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -105,14 +113,33 @@ const handleUpdateArtwork = (artworkId) => {
           // window.location.reload();
         }
       })
-      .catch((error) => {
-          console.error("Error deleting cart item:", error);
+      .catch(() => {
+        toast.error("Thất bại", {
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       });
+    }else {
+        toast.error("Số tiền ít nhất phải là 10000", {
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
 };
   return (
-    <div className="create-artwork-container">
+    <div>
         <section className="pt-9 pb-9">
-            <Container className="pl-8 pr-8">
+            <Container className="pl-10 pr-10">
                 <Row className="d-flex">
                     <Col lg="9">
                         {artworks && artworks.length > 0 ? (
@@ -125,7 +152,7 @@ const handleUpdateArtwork = (artworkId) => {
                                         <th>Lượt like</th>
                                         <th>Lượt comment</th>
                                         <th>Ngày tạo</th>
-                                        <th>Giá</th>
+                                        <th>Giá (VND)</th>
                                     </tr>
                                 </thead>
                                 <tbody>

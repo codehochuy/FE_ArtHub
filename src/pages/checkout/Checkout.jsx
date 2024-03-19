@@ -25,27 +25,52 @@ const Checkout = () => {
         audience: userId
       })
       .then((response) => {
-        if (response.data && response.data.order && response.data.order.orderId) {
-          const orderId = response.data.order.orderId;
-          // console.log("Order ID:", orderId);
-          createOrderDetail(orderId); // Gọi hàm createOrderDetail và truyền orderId vào đó
-        } else {
-          // console.log("Order ID not found in response");
-          toast.error("Tạo đơn hàng thất bại", {
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error creating order:", error);
-        // Xử lý khi có lỗi
+        if (response.data.status === "Create order detail successful") {
+   toast.success("Thành công", {
+     autoClose: 1000,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: false,
+     draggable: true,
+     progress: undefined,
+     theme: "dark",
+   });
+   // setLoad(response.data);
+ } else if (response.data.status === 'Your balance is not enough') {
+   toast.error("Tài khoản không đủ số dư", {
+     autoClose: 1000,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: false,
+     draggable: true,
+     progress: undefined,
+     theme: "dark",
+   });
+ }
+ else {
+   toast.error("Thất bại", {
+     autoClose: 1000,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: false,
+     draggable: true,
+     progress: undefined,
+     theme: "dark",
+   });
+ }
+     })
+     .catch(() => {
+      toast.error("Thất bại", {
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
+    });
+        
     };
           
       
@@ -56,33 +81,8 @@ const Checkout = () => {
               audience: userId
             })
             .then((response) => {
-               if (response.data && response.data.status === "Create order detail successful") {
-          toast.success("Tạo đơn hàng thành công", {
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          setLoad(response.data);
-        } else {
-          toast.error("Tạo đơn hàng thất bại", {
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
+              
             })
-            .catch((error) => {
-              console.error("Error creating order detail:", error);
-              // Xử lý khi có lỗi
-            });
       };
 
       const formattotalPrice = (orderPrice) => {

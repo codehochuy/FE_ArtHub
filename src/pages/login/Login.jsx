@@ -27,7 +27,7 @@ const LogIn = () => {
   }, [dispatch]);
 
   const initialValues = {
-    email: "huypt160548@fpt.edu.vn",
+    email: "david@gmail.com",
     password: "123",
   };
 
@@ -76,10 +76,11 @@ const LogIn = () => {
   //       setLoading(false);
   //     });
   // };
+
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(false);
-  
+   
     authService.login(email, password)
       .then((response) => {
         const userInfo = response.userInfo;
@@ -88,9 +89,7 @@ const LogIn = () => {
         } else if (userInfo.role === "AUDIENCE" || userInfo.role === 'CREATOR') {
           navigate('/home');
         }
-       
-  
-        // window.location.reload();
+        window.location.reload();
         console.log("usersID:", userInfo.usersID);
       })
       .catch(() => {

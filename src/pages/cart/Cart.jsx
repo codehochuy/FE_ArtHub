@@ -2,64 +2,32 @@
 import React, { useEffect, useState } from "react";
 import "./cart.css";
 import { Col, Container, Row } from "reactstrap";
-
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import userService from "../../api/user.service";
 import { useNavigate } from "react-router-dom";
-// import authServices from "../../api/voucher.service";
 
 const Cart = () => {
-//   const [vouchers, setVouchers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  // const [listCart, setListCart] = useState([]);
-  // const [cartTotal, setCartTotal] = useState("");
   const [carts, setCarts] = useState([]);
-  // const [load, setLoad] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const navigate = useNavigate();
-//   const [usedVouchers, setUsedVouchers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   // listVouchers();
-  //   loadCartFromLocalStorage();
-  // }, [load]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await userService.getCart();
         setCarts(response.data);
-        // console.log("Response:", response.data);
-      } catch (error) {
+      } 
+      catch (error) {
         console.error("Error fetching artworks:", error);
       }
-   
-
     };
     fetchData();
   }, []);
 
-  
-
-
-  // isLoggedIn,navigate
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-    // handle Call API for fetch data
-    const fetchCart = async () => {
-      userService.getCart().then((data) => {
-        console.log(data);
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          setListCart(data.data.data);
-          setCartTotal(data.data?.cartTotal);
-        }
-      });
-    }
 
     const formattotalPrice = (totalPrice) => {
       let formattedPrice = totalPrice.toString();
@@ -116,9 +84,9 @@ const Cart = () => {
     const handleRemoveFromCart = (cartId) => {
       userService.remove_from_cart(cartId)
           .then((response) => {
-            if (response.data && response.data.status === 'Item removed from cart successfully') {
-              toast.success("Xoá thành công", {
-                autoClose: 3000,
+            if (response.data.status === 'Item removed from cart successfully') {
+              toast.success("Thành công", {
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -126,10 +94,12 @@ const Cart = () => {
                 progress: undefined,
                 theme: "dark",
               });
-              window.location.reload();
+              setTimeout(() => {
+                window.location.reload();
+            }, 1000);
             } else {
-              toast.error("Xoá thất bại", {
-                autoClose: 3000,
+              toast.error("Thất bại", {
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -139,9 +109,6 @@ const Cart = () => {
               });
             }
           })
-          .catch((error) => {
-              console.error("Error deleting cart item:", error);
-          });
   };
     
   return (

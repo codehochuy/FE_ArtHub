@@ -19,6 +19,8 @@ import Cart from "../pages/cart/Cart";
 import ManageArtwork from "../components/creator/ManageArtwork";
 import CreateArtwork from "../components/creator/CreateArtwork";
 import GetArtwork from "../components/creator/GetArtwork";
+import PaymentWallet from "../components/creator/PaymentWallet";
+
 // import ListVouchers from "../components/admin/voucher/ListVouchers";
 // import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import CreateNewProduct from "../components/admin/product/CreateNewProduct";
@@ -67,6 +69,15 @@ const Routers = () => {
           </MainLayout>
         }
       />
+      <Route
+        path="paymentwallet"
+        element={
+          <MainLayout>
+            < PaymentWallet />
+          </MainLayout>
+        }
+      />
+      
      
          {/* <Route
         path="homeCreator"

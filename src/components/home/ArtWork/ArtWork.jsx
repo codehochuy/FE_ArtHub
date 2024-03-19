@@ -95,7 +95,7 @@ const ArtWorkPage = (props) => {
       )
       .then((response) => {
         if (response.data && response.data.status === 'This artwork is already in the cart.') {
-          toast.error("Artwork đã có trong giỏ hàng", {
+          toast.error("Tác phẩm đã có trong giỏ hàng", {
             autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -105,7 +105,7 @@ const ArtWorkPage = (props) => {
             theme: "dark",
           });
         } else {
-          toast.success("Thêm thành công", {
+          toast.success("Thành công", {
             autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -115,6 +115,17 @@ const ArtWorkPage = (props) => {
             theme: "dark",
           });
         }
+      })
+      .catch(() => {
+        toast.error("Thất bại", {
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       });
   };
  

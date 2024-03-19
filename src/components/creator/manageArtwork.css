@@ -1,9 +1,14 @@
-/* CSS của button */
-.manage-artwork-container {
-    margin-top: 50px;
-    margin-left: 200px;
-   margin-right: 500px; 
-   margin-bottom: 100px;
-   
- 
+.grid-container {
+    display: flex; /* Sử dụng Flexbox */
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.left-half {
+    flex: 1; /* Khung trái sẽ chiếm một phần */
+}
+
+.right-half {
+    flex: 1; /* Khung phải sẽ chiếm một phần */
+    margin-left: 20px; /* Thêm một lề bên trái cho khung phải */
 }
