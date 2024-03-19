@@ -16,7 +16,9 @@ import MainLayout from "../components/layout/MainLayout";
 // import ListArtWorks from "../components/admin/artwork/ListArtWorks";
 import ArtWork from "../components/home/ArtWork/ArtWork";
 import Cart from "../pages/cart/Cart";
-import ManageArtWork_C from "../components/creator/ManageArtWork_C";
+import ManageArtwork from "../components/creator/ManageArtwork";
+import CreateArtwork from "../components/creator/CreateArtwork";
+import GetArtwork from "../components/creator/GetArtwork";
 // import ListVouchers from "../components/admin/voucher/ListVouchers";
 // import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import CreateNewProduct from "../components/admin/product/CreateNewProduct";
@@ -42,13 +44,30 @@ const Routers = () => {
         }
       />
       <Route
-        path="manageartwork_c"
+        path="manageartwork"
         element={
           <MainLayout>
-            <ManageArtWork_C />
+            <ManageArtwork />
           </MainLayout>
         }
       />
+        <Route
+        path="createartwork"
+        element={
+          <MainLayout>
+            <CreateArtwork />
+          </MainLayout>
+        }
+      />
+         <Route
+        path="getartwork"
+        element={
+          <MainLayout>
+            < GetArtwork />
+          </MainLayout>
+        }
+      />
+     
          {/* <Route
         path="homeCreator"
         element={

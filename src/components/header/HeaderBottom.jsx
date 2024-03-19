@@ -209,7 +209,7 @@ const HeaderBottom = () => {
            
 
           </div>
-          <Link to="/manageartwork_c">
+          <Link to="/manageartwork">
               <div className="relative">
                 <FaShoppingCart />
                 {/* <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
@@ -217,6 +217,7 @@ const HeaderBottom = () => {
                 </span> */}
               </div>
             </Link>
+
         </Flex>
         
       </div>

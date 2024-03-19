@@ -32,17 +32,17 @@ const login = (email, password) => {
 };
 
 
-const loginGoogle = (accessToken) => {
-  return axios
-    .post(`${API_URL}${"login"}`, )
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
+// const loginGoogle = (accessToken) => {
+//   return axios
+//     .post(`${API_URL}${"login"}`, )
+//     .then((response) => {
+//       if (response.data.token) {
+//         localStorage.setItem("user", JSON.stringify(response.data));
+//       }
 
-      return response.data;
-    });
-};
+//       return response.data;
+//     });
+// };
 
 const logout = () => {
   // localStorage.clear(); 

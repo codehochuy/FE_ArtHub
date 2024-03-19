@@ -72,8 +72,20 @@ const getComment = () => {
 const viewOrderDetail = (orderId) => {
   return axios.get(API_URL + "orderDetail/" + orderId, { headers: authHeader() })
 };
-const createArtWork = (formData) => {
-  return axios.post(CREATOR_URL + "create2", formData , { headers: authHeader() });
+const createArtWork = (data) => {
+  return axios.post(CREATOR_URL + "create", data,   { headers: authHeader() });
+};
+const getArtWork = (creatorId) => {
+  return axios.get(CREATOR_URL +"artworks/"  + creatorId ,   { headers: authHeader() });
+};
+const deleteArtWork = (artworkid) => {
+  return axios.delete(CREATOR_URL + artworkid , { headers: authHeader() });
+};
+// const updateArtWork = (artworkid, data) => {
+//   return axios.put(CREATOR_URL + "updateArtwork/" + artworkid , data, { headers: authHeader() });
+// };
+const updateArtWork = (artworkId, data) => {
+  return axios.put(`${CREATOR_URL}updateArtwork/${artworkId}`, data, { headers: authHeader() });
 };
 export default {
   addToCart,
@@ -86,6 +98,9 @@ export default {
   createLike,
   getComment,
   createArtWork,
+  getArtWork,
+  deleteArtWork,
+  updateArtWork,
 };
 
 

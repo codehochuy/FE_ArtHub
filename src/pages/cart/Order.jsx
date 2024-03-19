@@ -109,7 +109,6 @@ const [zoomedImage, setZoomedImage] = useState(null);
   <tr>
     <td colSpan="4">
       <div>
-    
         <table className="table bordered">
           {/* <thead> */}
             {/* <tr> */}
@@ -145,14 +144,9 @@ const [zoomedImage, setZoomedImage] = useState(null);
     </td>
   </tr>
 )}
-
     </React.Fragment>
                      ))} 
-
-
                   </tbody>
-
-                  
                 </table>
               ) : (
                 <h2 className="fs-4 text-center" style={{marginLeft:"0px", marginBottom:"300px"}}>Chưa có đơn hàng</h2>
@@ -170,7 +164,6 @@ const [zoomedImage, setZoomedImage] = useState(null);
     {/* </div> */}
     </div>
   );
- 
   };
   export default Order;
   

@@ -9,6 +9,7 @@ import ArtWork from "../../components/home/ArtWork/ArtWork";
 // import SpecialOffers from "../../components/home/specialOffers/SpecialOffers";
 // import Clock from "../../components/home/clock/Clock";
 
+
 const Home = () => {
   const year = new Date().getFullYear();
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       {/* <BestSellers /> */}
       {/* <YearProduct /> */}
        <ArtWork />
+      
       {/* <SpecialOffers /> */}
       {/* <Clock/> */}
       </div>

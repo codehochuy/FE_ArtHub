@@ -16,14 +16,11 @@
   // console.log('access_token:', access_token);
   const authHeader = () => {
     const access_token = localStorage.getItem('access_token');
-    const usersID = localStorage.getItem('usersID');
   if (access_token) {
-    console.log(access_token);
+    // console.log(access_token);
     return { 
       Authorization: 'Bearer ' + access_token, 
       'Content-Type': 'application/json',
-      'userID': usersID,
-  
     };
     
   } else {

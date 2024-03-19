@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { login } from "../../redux/slice/auth";
 import { clearMessage } from "../../redux/slice/message";
 import * as Yup from "yup";
+import authService from '../../api/auth.service';
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -26,7 +27,7 @@ const LogIn = () => {
   }, [dispatch]);
 
   const initialValues = {
-    email: "david@gmail.com",
+    email: "huypt160548@fpt.edu.vn",
     password: "123",
   };
 
@@ -50,25 +51,47 @@ const LogIn = () => {
   //       console.error(errorCode, errorMessage);
   //     });
   // };
+  // const handleLogin = (formValue) => {
+  //   const { email, password } = formValue;
+  //   setLoading(false);
+
+  //   dispatch(login({ email, password }))
+  //     .unwrap()
+  //     .then((user) => {
+  //       // console.log("zxcxzc",user,user.user);
+  //       if (user.userInfo.role === 'ADMIN') {
+  //         navigate("/admin");
+  //       } else if (response.data.userInfo.role === "AUDIENCE") {
+  //         navigate('/home')
+  //       }
+  //       else if (response.data.userInfo.role === 'CREATOR') {
+  //         navigate('/home')
+  //       }
+  //       localStorage.setItem('usersID', user.userInfo.usersID);
+  //       console.log(user.userInfo.usersID);
+  //       window.location.reload();
+
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(false);
-
-    dispatch(login({ email, password }))
-      .unwrap()
-      .then((user) => {
-        // console.log("zxcxzc",user,user.user);
-        if (user.user.role === 'ADMIN') {
+  
+    authService.login(email, password)
+      .then((response) => {
+        const userInfo = response.userInfo;
+        if (userInfo.role === 'ADMIN') {
           navigate("/admin");
-        } else if (user.user.userInfo.role === 'AUDIENCE') {
-          navigate('/home')
+        } else if (userInfo.role === "AUDIENCE" || userInfo.role === 'CREATOR') {
+          navigate('/home');
         }
-        else if (user.user.userInfo.role === 'CREATOR') {
-          navigate('/home')
-        }
-        window.location.reload();
-
+       
+  
         // window.location.reload();
+        console.log("usersID:", userInfo.usersID);
       })
       .catch(() => {
         setLoading(false);
@@ -135,12 +158,13 @@ const LogIn = () => {
                   </label>
                   <Field
                     name="email"
-                    value="huypt160548@fpt.edu.vn"
+                    
                     type="text"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                   <ErrorMessage
                     name="email"
+                    
                     component="div"
                     className="text-red-500 text-xs italic"
                   />
