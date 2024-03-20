@@ -2,6 +2,7 @@
 import axios from 'axios';
 import authHeader from "./auth-header";
 
+const AUTH_URL = "http://localhost:8080/api/v1/auth/";
 const API_URL = "http://localhost:8080/api/v1/user/";
 const CREATOR_URL = "http://localhost:8080/api/v1/creator/";
 const ADMIN_URL = "http://localhost:8080/api/v1/admin/";
@@ -61,6 +62,13 @@ const unbanUser = (id) => {
 const getBalance = (id) => {
   return axios.get(API_URL + "userinfo/" + id, { headers: authHeader() });
 };
+const sendMail = (orderId) => {
+  return axios.post(`${AUTH_URL}sendArtworkInfo/${orderId}`, null, { headers: authHeader() });
+};
+
+
+
+
 export default {
   addToCart,
   getCart,
@@ -80,6 +88,7 @@ export default {
   banUser,
   unbanUser,
   getBalance,
+  sendMail,
 };
 
 

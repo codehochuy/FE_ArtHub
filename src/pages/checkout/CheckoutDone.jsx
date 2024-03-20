@@ -225,10 +225,10 @@ const CheckoutDone = () => {
 
 
         <p className="text-xl font-medium"  style={{
-            marginLeft: '350px',
+            marginLeft: '260px',
             marginRight: '250px',
           }}>
-Đặt hàng thành công
+Đặt hàng thành công, hãy kiểm tra mail!
         </p>
         
         <div className="flex" style={{ marginLeft: '280px' }}>

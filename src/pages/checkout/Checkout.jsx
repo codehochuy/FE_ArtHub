@@ -69,7 +69,14 @@ const Checkout = () => {
         } else{
           
           const orderId = response.data.order.orderId;
+          // sendMail(orderId);
+          setTimeout(() => {
+            sendMail(orderId);
+            
+          }, 5000);
           createOrderDetail(orderId);
+         
+          
         }
       })
       .catch((error) => {
@@ -96,15 +103,6 @@ const Checkout = () => {
         console.log(response.data);
 
         if (response.data.status === "Create order detail successful") {
-          // toast.success("Thành công", {
-          //   autoClose: 1000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: false,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "dark",
-          // });
           // Chờ 2 giây trước khi chuyển hướng
           setTimeout(() => {
             navigate('/checkoutdone');
@@ -115,6 +113,21 @@ const Checkout = () => {
       .catch((error) => {
         console.error("Error creating order:", error);
       });
+  };
+
+  const sendMail = (orderId) => {
+    userService.sendMail(orderId)
+    .then((response) => {
+      console.log("Response from sendMail:", response); // Log response hoàn chỉnh
+  
+      if (response.data.status === "Create order detail successful") {
+        // Xử lý khi request thành công
+      } 
+    })
+    .catch((error) => {
+      console.error("Error creating order:", error); // Log lỗi nếu có
+    });
+  
   };
   
 
