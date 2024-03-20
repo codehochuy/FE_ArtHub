@@ -14,7 +14,18 @@ const PaymentWallet = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (money >= 10000) {
+        if (money < 10000) {
+            toast.error("Số tiền ít nhất phải là 10000", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+
             const data = {
                 money: money, 
             };
@@ -30,7 +41,6 @@ const PaymentWallet = () => {
                         progress: undefined,
                         theme: "dark",
                     });
-                    // Set state reloadComponent thành true để reload component
                     setReloadComponent(true);
                 } else {
                     toast.error("Thất bại", {
@@ -55,17 +65,7 @@ const PaymentWallet = () => {
                     theme: "dark",
                 });
             });
-        } else {
-            toast.error("Số tiền ít nhất phải là 10000", {
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
+        }        
     };
 
     useEffect(() => {
@@ -107,17 +107,29 @@ const PaymentWallet = () => {
 
     return (
         <div className= "container">
-           <FaWallet /> 
-         <label>Số dư: {formattotalPrice(balance)}</label> {/* Hiển thị số tiền hiện có */}
+           
+           
+           
+
+
+<div style={{ display: 'flex', alignItems: 'center' , marginLeft: "0px"}}>
+    <FaWallet style={{ marginRight: '5px' }} />
+    <label style={{ marginRight: '10px' }}>Số dư:</label>
+    <span style={{ fontWeight: 'bold' }}>{formattotalPrice(balance)}</span>
+</div>
         
+
+
+            
+            
             <form onSubmit={handleSubmit}>
 
         
 
 
 <div className="input-wrapper">
-            <label htmlFor="artworkName">Nạp thêm</label>
-{/* <div className="input-wrapper"> */}
+            <label htmlFor="artworkName">Nạp thêm:</label>
+
 <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
 <input value={money} onChange={(e) => setMoney(e.target.value)}
 className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
@@ -125,10 +137,16 @@ type="number"
 placeholder="Ít nhất 10.000 vnd"
 />
 </div>
-{/* </div> */}
+
 </div>
 
-<div className="relative">
+
+
+
+<label htmlFor="">Phương thức thanh toán</label>
+<div className="relative" style={{ width: '600px', marginBottom:'50px' }}>
+
+
               <input
                 className="peer hidden"
                 id="radio_1"
@@ -141,23 +159,53 @@ placeholder="Ít nhất 10.000 vnd"
                 className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
                 htmlFor="radio_1"
               >
+
+
                 <img
                   className="w-14 object-contain"
                   src="https://kalite.vn/wp-content/uploads/2021/09/maqrkalite.jpg"
                   alt=""
                 />
+
+
+
+                
               <div className="ml-5 mt-2">
     <span className="font-semibold">Cổng thanh toán VNPAY</span>
+</div></label>
 </div>
-              </label>
-</div>
+
+<br></br>
+
+<button
+    type="submit"
+    style={{
+        width: '150px', // Thiết lập chiều rộng là 150px
+        height: '45px', // Thiết lập chiều cao là 40px
+        padding: '10px 20px', // Thiết lập padding là 10px trên/dưới và 20px trái/phải
+        fontSize: '16px', // Kích thước chữ
+        color: 'white', // Màu chữ
+        borderRadius: '5px', // Bo góc
+        border: 'none', // Không viền
+        cursor: 'pointer', // Con trỏ chuột
+        marginBottom: '50px',
+        marginLeft: '200px',
+    }}
+>
+    Xác nhận
+</button>
 
 
 
 
-                <button type="submit">Xác nhận</button>
+                
                 </form>
-        </div>
+                </div>
+
+
+
+        
+       
        
        
       

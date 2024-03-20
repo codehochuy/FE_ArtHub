@@ -94,7 +94,30 @@ const GetArtwork = () => {
   };
 //handle update artwork
 const handleUpdateArtwork = (artworkId) => {
-  if (updatedPrice || selectedArtwork.artworkName >= 10000) {
+  if (updatedPrice < 10000) {
+    toast.error("Giá ít nhất là 10.000", {
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+  });
+  }else if (updatedArtworkName.trim() === ''){
+    toast.error("Tên không hợp lệ", {
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+  });
+}
+  
+  
+else{
   const updatedArtwork = {
     artworkName: updatedArtworkName || selectedArtwork.artworkName,
     price: updatedPrice || selectedArtwork.price
@@ -114,8 +137,6 @@ const handleUpdateArtwork = (artworkId) => {
             theme: "dark",
           });
           setReloadComponent(true);
-          
-          // window.location.reload();
         } else {
           toast.error("Thất bại", {
             autoClose: 1000,
@@ -126,7 +147,6 @@ const handleUpdateArtwork = (artworkId) => {
             progress: undefined,
             theme: "dark",
           });
-          // window.location.reload();
         }
       })
       .catch(() => {
@@ -140,16 +160,6 @@ const handleUpdateArtwork = (artworkId) => {
           theme: "dark",
         });
       });
-    }else {
-        toast.error("Số tiền ít nhất phải là 10000", {
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
     }
 };
 const formatDate = (dateTimeString) => {
@@ -175,7 +185,8 @@ const formatDate = (dateTimeString) => {
   return (
     <div class= "container_manageArtwork">
         <section className="pt-9 pb-9">
-            <Container className="pl-10 pr-10">
+        <Container className="pl-2 pr-10">
+
                 <Row className="d-flex">
                     <Col lg="9">
                         {artworks && artworks.length > 0 ? (

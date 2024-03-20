@@ -6,6 +6,7 @@ import { login } from "../../redux/slice/auth";
 import { clearMessage } from "../../redux/slice/message";
 import * as Yup from "yup";
 import authService from '../../api/auth.service';
+import { toast } from "react-toastify";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -59,6 +60,16 @@ const LogIn = () => {
                     navigate('/home');
                 }
                window.location.reload();  // Reload trang khi đăng nhập thành công
+            }else{
+              toast.error("User bị ban, liên hệ admin", {
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
             }
             return response.data;
         })

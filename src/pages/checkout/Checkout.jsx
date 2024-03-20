@@ -256,7 +256,7 @@ Tổng thanh toán: {formattotalPrice(orderPrice)}
             marginLeft: '300px',
             marginRight: '300px',
           }}>
-Số dư trong ví: {formattotalPrice(balance)}
+
         </p>
 
 
@@ -290,8 +290,8 @@ Số dư trong ví: {formattotalPrice(balance)}
                   alt=""
                 />
               <div className="ml-5">
-  <span className="mt-2 font-semibold">ArtWork Payment Wallet</span>
-
+  <span className="mt-2 font-semibold">ArtWork Payment Wallet</span><br></br>
+  Số dư trong ví: {formattotalPrice(balance)}
               </div>
               </label>
 </div>

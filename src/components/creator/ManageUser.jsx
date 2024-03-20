@@ -5,6 +5,7 @@ import { Col, Container, Row } from "reactstrap";
 import { toast } from "react-toastify";
 const ManageUser = () => {
     const [users, setUsers] = useState([]);
+    const [reloadComponent, setReloadComponent] = useState(false);
  
 
     useEffect(() => {
@@ -18,27 +19,59 @@ const ManageUser = () => {
           }
         };
         fetchData();
-      }, []);
+        if (reloadComponent) {
+            setReloadComponent(false);
+        }
+      }, [users]);
 
 
       const handleBanUser = (user) => {
         userService.banUser(user.usersID)
             .then(response => {
-                console.log(response.data)
+                if (response.data.status === "Ban User Successful"){
+                    toast.success("Thành công", {
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                    });
+                    setReloadComponent(true);
+                    console.log(response.data)
+                }
+               
             })
             .catch(error => {
                 console.error("Error banning user:", error);
             });
+           
     };
 
     const handleUnbanUser = (user) => {
         userService.unbanUser(user.usersID)
             .then(response => {
-                console.log(response.data)
+                if (response.data.status === "UnBan User Successful"){
+                    toast.success("Thành công", {
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                    });
+                    setReloadComponent(true);
+                    console.log(response.data)
+                }
+                
+                
             })
             .catch(error => {
                 console.error("Error banning user:", error);
             });
+            
     };
   
       
@@ -47,9 +80,9 @@ const ManageUser = () => {
   return (
     <div>
           <section className="pt-9 pb-9">
-            <Container className="pl-10 pr-10">
-                <Row className="d-flex">
-                    <Col lg="9">
+            {/* <Container className="pl-10 pr-10">
+                <Row className="d-flex"> */}
+                    {/* <Col lg="1"> */}
                         {users && users.length > 0 ? (
                             <table className="table bordered">
                                 <thead>
@@ -63,7 +96,7 @@ const ManageUser = () => {
                                         <th>userStatus</th>
                                             <th>accountBalance</th>
                                         <th>role</th>
-                                        <th>enabled</th>
+                                        
                                         <th>username</th>
                                     </tr>
                                 </thead>
@@ -80,7 +113,7 @@ const ManageUser = () => {
                                                 <td>{user.userStatus ? "Active" : "Inactive"}</td>
                                                 <td>{user.accountBalance}</td>
                                                 <td>{user.role}</td>
-                                                <td>{user.enabled ? "Active" : "Inactive"}</td>
+                                              
                                                 <td>{user.username}</td>
                                                 
 
@@ -107,9 +140,9 @@ const ManageUser = () => {
                         ) : (
                             <h2 className="fs-4 text-center">Không có artwork nào</h2>
                         )}
-                    </Col>
-                </Row>
-            </Container>
+                    {/* </Col> */}
+                {/* </Row>
+            </Container> */}
         </section>
     </div>
 );

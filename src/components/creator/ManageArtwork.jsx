@@ -17,6 +17,9 @@ const ManageArtwork = () => {
     const [showGetArtwork, setShowGetArtwork] = useState(false); 
     const [showPaymentWallet, setShowPaymentWallet] = useState(false); 
     const [showUser, setShowUser] = useState(false); 
+    const [isUserManagerExpanded, setIsUserManagerExpanded] = useState(true); 
+
+    
    
     const handleCreateArtworkClick = () => {
         setShowCreateArtwork(true); 
@@ -47,6 +50,8 @@ const ManageArtwork = () => {
     };
 
     return (
+       
+
         <div className="grid-container">
             <div className="left-half">
                 <br/>
@@ -58,13 +63,7 @@ const ManageArtwork = () => {
                        
                     </>
                 )}
-                {userRole == "ADMIN" && (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <GrUserManager/><Link to="#" onClick={handleUserClick} style={{ marginLeft: '5px' }}>Quản lí user</Link>
-                        </div>
-                    </>
-                )}
+               
                 {userRole == "CREATOR" && (
                     <>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -83,6 +82,13 @@ const ManageArtwork = () => {
                 )}
             </div>
             <div className="right-half">
+            {userRole == "ADMIN" && (
+                    <>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <GrUserManager/><Link to="#" onClick={handleUserClick} style={{ marginLeft: '5px' }}>Quản lí user</Link>
+                        </div>
+                    </>
+                )}
                 <div>
                     {showCreateArtwork && <CreateArtwork />} 
                     {showGetArtwork && <GetArtwork />} 
@@ -91,6 +97,7 @@ const ManageArtwork = () => {
                 </div>
             </div>
         </div>
+       
     );    
 };
 
