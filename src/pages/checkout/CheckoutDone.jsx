@@ -2,25 +2,18 @@ import { useEffect, useState } from "react";
 import userService from "../../api/user.service";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
-const Checkout = () => {
 
-
-
+const CheckoutDone = () => {
   const orderPrice = localStorage.getItem("totalPrice");
   const [carts, setCarts] = useState([]);
   const userId = localStorage.getItem("usersID");
-  const navigate = useNavigate();
-  const [balance, setBalance] = useState(0);
-
-
-
-
   
-  
+
+
   
   useEffect(() => {
     const fetchData = async () => {
@@ -74,15 +67,6 @@ const Checkout = () => {
       })
       .catch((error) => {
         console.error("Error creating order:", error);
-        toast.error("Có lỗi xảy ra", {
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
       });
   };
   
@@ -96,20 +80,15 @@ const Checkout = () => {
         console.log(response.data);
 
         if (response.data.status === "Create order detail successful") {
-          // toast.success("Thành công", {
-          //   autoClose: 1000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: false,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "dark",
-          // });
-          // Chờ 2 giây trước khi chuyển hướng
-          setTimeout(() => {
-            navigate('/checkoutdone');
-          }, 2000);
-         
+          toast.success("Thành công", {
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         } 
       })
       .catch((error) => {
@@ -131,20 +110,6 @@ const Checkout = () => {
         return result + ' VNĐ';
       };
 
-      useEffect(() => {
-        const fetchBalance = async () => {
-            try {
-                const response = await userService.getBalance(userId);
-                console.log(response.data)
-                setBalance(response.data.money);
-            } catch (error) {
-                console.error("Error fetching balance:", error);
-            }
-        };
-        fetchBalance();
-    }, []); // Chạy effect mỗi khi userId thay đổi
-
-
 
 
   return (
@@ -152,7 +117,7 @@ const Checkout = () => {
     
     <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" className="text-2xl font-bold text-gray-800">
-          Trang thanh toán
+          {/* Trang thanh toán */}
         </a>
         <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
           <div className="relative">
@@ -195,10 +160,23 @@ const Checkout = () => {
               </svg>
               <li className="flex items-center space-x-3 text-left sm:space-x-4">
                 <a
-                  className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2"
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-xs font-semibold text-emerald-700"
                   href="#"
                 >
-                  2
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
                 </a>
                 <span className="font-semibold text-gray-900">Thanh toán</span>
               </li>
@@ -218,19 +196,17 @@ const Checkout = () => {
               </svg>
               <li className="flex items-center space-x-3 text-left sm:space-x-4">
                 <a
-                  className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white"
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2"
                   href="#"
                 >
                   3
                 </a>
-                <span className="font-semibold text-gray-500"></span>
+                <span className="font-semibold text-gray-900">Hoàn thành</span>
               </li>
             </ul>
           </div>
         </div>
       </div>
-
-
 
 
           <div className="grid sm:px-10 lg:grid-cols-1 lg:px-20 xl:px-32" style={{
@@ -246,82 +222,47 @@ const Checkout = () => {
         
 
         <div className="mt-10 bg-gray-40 px-0 pt-8 lg:mt-0">
+
+
         <p className="text-xl font-medium"  style={{
-            marginLeft: '300px',
-            marginRight: '300px',
+            marginLeft: '350px',
+            marginRight: '250px',
           }}>
-Tổng thanh toán: {formattotalPrice(orderPrice)}
+Đặt hàng thành công
         </p>
-        <p className="text-l font-medium"  style={{
-            marginLeft: '300px',
-            marginRight: '300px',
-          }}>
-Số dư trong ví: {formattotalPrice(balance)}
-        </p>
-
-
-        <div className="mt-8 text-lg font-medium">
-    <p className="mx-auto" style={{ width: '800px' }}>
-        Phương thức thanh toán
-    </p>
+        
+        <div className="flex" style={{ marginLeft: '280px' }}>
+  <Link to="/order" className="block text-center mt-4 bg-black bg-opacity-70 hover:bg-opacity-80 text-white font py-2 px-4 rounded">
+    Xem đơn hàng
+  </Link>
+  <Link to="/home" className="block text-center mt-4 ml-4 bg-black bg-opacity-70 hover:bg-opacity-80 text-white font py-2 px-4 rounded">
+    Về trang chính
+  </Link>
 </div>
 
 
 
 
 
-          <form className="mt-5 grid gap-6">
-<div className="relative">
-              <input
-                className="peer hidden"
-                id="radio_1"
-                type="radio"
-                name="radio"
-                checked
-              />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_1"
-              >
-                <img
-                  className="w-14 object-contain"
-                  src="https://png.pngtree.com/png-vector/20230330/ourmid/pngtree-ewallet-line-icon-vector-png-image_6675389.png"
-                  alt=""
-                />
-              <div className="ml-5">
-  <span className="mt-2 font-semibold">ArtWork Payment Wallet</span>
-
-              </div>
-              </label>
-</div>
-            <div className="relative">
-              {/* <input
-                className="peer hidden"
-                id="radio_2"
-                type="radio"
-                name="radio"
-                checked
-              /> */}
-            </div>
-
-          </form>
 
 
-          
-          <button
-            className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-            onClick={() => createOrder(orderPrice)}
-          >
-            Đặt hàng
-          </button>
+        
+        
         </div>
       </div>
     
     </> 
-   
   );
- 
 };
 
-export default Checkout;
+export default CheckoutDone;
+
+
+
+
+
+
+
+
+
+           

@@ -119,7 +119,7 @@ const Cart = () => {
 
     
   return (
-    <div style={{ marginLeft: '50px' , marginRight: '50px'}}>
+    <div style={{ marginLeft: '0px' , marginRight: '250px'}}>
       <section className="pt-9 pb-9">
         <Container className="pl-8 pr-8">
           <Row className="d-flex">
@@ -153,7 +153,7 @@ const Cart = () => {
              
                 </table>
               ) : (
-                <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
+                <h2 className="fs-4 text-center" style={{marginLeft:"150px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
 
               )}
             </Col>

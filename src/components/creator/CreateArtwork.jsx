@@ -98,14 +98,6 @@ placeholder="Nhập tên tác phẩm"
 
                
 
-                {/* <div>
-                    <label>Giá</label>
-                    <input value={price} onChange={(e) => setPrice(e.target.value)}
-              className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
-              type="number"
-              placeholder="Giá"
-            />
-                </div> */}
 
 
 <div className="input-wrapper">
@@ -124,15 +116,6 @@ placeholder="Ít nhất 10.000 vnd"
 
 
 
-
-
-
-                {/* <div>
-                    <label>Ảnh tác phẩm</label>
-                    <input type="file" onChange={handleFileChange} />
-                </div> */}
-
-
     <label htmlFor="artworkName">Chọn file</label>
     <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
         <input 
@@ -147,10 +130,10 @@ placeholder="Ít nhất 10.000 vnd"
 
 
 
-                <button type="submit">Submit</button>
+                <button type="submit">Xác nhận</button>
 
 
-
+               
 
 
             </form>
@@ -161,31 +144,3 @@ placeholder="Ít nhất 10.000 vnd"
 export default CreateArtWork;
 
 
-
-// return (
-       
-//     <div className="create-artwork-container">
-        
-        
-//         <form onSubmit={handleSubmit}>
-//             <div>
-//                 <label>Tên tác phẩm</label>
-//                 <input type="text" value={artworkName} onChange={(e) => setArtworkName(e.target.value)} />
-//                 <input
-//           className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
-//           type="text"
-//           placeholder="Search your Artworks here"
-//         />
-//             </div>
-//             <div>
-//                 <label>Giá</label>
-//                 <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-//             </div>
-//             <div>
-//                 <label>Ảnh tác phẩm</label>
-//                 <input type="file" onChange={handleFileChange} />
-//             </div>
-//             <button type="submit">Submit</button>
-//         </form>
-//     </div>
-// );

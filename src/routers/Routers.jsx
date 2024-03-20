@@ -10,6 +10,7 @@ import Login from "../pages/login/Login";
 // import Contact from "../pages/contact/Contact";
 // import Shop from "../pages/shop/Shop";
 import Checkout from "../pages/checkout/Checkout";
+import CheckoutDone from "../pages/checkout/CheckoutDone";
 // import ProductDetails from "../pages/productDetails/ProductDetails";
 import MainLayout from "../components/layout/MainLayout";
 import AdminLayout from "../components/layout/AdminLayout";
@@ -178,6 +179,14 @@ const Routers = () => {
         element={
           <MainLayout>
             <Checkout />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="checkoutdone"
+        element={
+          <MainLayout>
+            <CheckoutDone />
           </MainLayout>
         }
       />

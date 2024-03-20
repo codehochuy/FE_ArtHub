@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-gray-800 text-white py-12">
+    <footer className="bg-gray-800 text-white py-10">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="mb-4 lg:col-span-1">
@@ -42,7 +42,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="flex flex-col ml-1">
+<div className="flex flex-col ml-1">
               <div className="mb-4">
                 <h4 className="text-xl font-semibold mb-4">Customer services</h4>
                 <ul>
@@ -78,7 +78,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+ </div>
 
 
 

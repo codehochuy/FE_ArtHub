@@ -70,11 +70,31 @@ const [zoomedImage, setZoomedImage] = useState(null);
     // Sử dụng regex để thêm dấu chấm sau mỗi 3 chữ số từ cuối cùng
     return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
   }
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+  
+    // Đảm bảo các số có hai chữ số bằng cách thêm số 0 nếu cần
+    const formattedDay = day < 10 ? '0' + day : day;
+    const formattedMonth = month < 10 ? '0' + month : month;
+    const formattedHours = hours < 10 ? '0' + hours : hours;
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+  
+    // Định dạng lại chuỗi ngày/tháng/năm giờ:phút
+    const formattedDateTime = `${formattedDay}/${formattedMonth}/${year} ${formattedHours}:${formattedMinutes}`;
+  
+    return formattedDateTime;
+  };
+  
 
 
 
   return (
-    <div className="order_container">
+    <div className="" style={{ marginLeft: '50px' , marginRight: '250px'}}>
     {/* <div style={{ marginLeft: '50px' , marginRight: '50px'}}> */}
       <section className="pt-9 pb-9">
         <Container className="pl-8 pr-8">
@@ -97,7 +117,7 @@ const [zoomedImage, setZoomedImage] = useState(null);
                     <React.Fragment key={index}>
       <tr>
         <td>{order.orderId}</td>
-        <td>{order.orderDate}</td>
+        <td>{formatDate(order.orderDate)}</td>
         {/* <td>{order.orderPrice}</td> */}
         <td>{formatPrice(order.orderPrice)}</td>
         <td>
@@ -149,7 +169,7 @@ const [zoomedImage, setZoomedImage] = useState(null);
                   </tbody>
                 </table>
               ) : (
-                <h2 className="fs-4 text-center" style={{marginLeft:"0px", marginBottom:"300px"}}>Chưa có đơn hàng</h2>
+                <h2 className="fs-4 text-center" style={{marginLeft:"0px", marginBottom:"150px", marginRight:"300px"}}>Chưa có đơn hàng</h2>
               )}
             </Col>
   </Row>

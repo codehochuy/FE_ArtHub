@@ -139,6 +139,26 @@ const handleUpdateArtwork = (artworkId) => {
         });
     }
 };
+const formatDate = (dateTimeString) => {
+  const date = new Date(dateTimeString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  // Đảm bảo các số có hai chữ số bằng cách thêm số 0 nếu cần
+  const formattedDay = day < 10 ? '0' + day : day;
+  const formattedMonth = month < 10 ? '0' + month : month;
+  const formattedHours = hours < 10 ? '0' + hours : hours;
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+  // Định dạng lại chuỗi ngày/tháng/năm giờ:phút
+  const formattedDateTime = `${formattedDay}/${formattedMonth}/${year} ${formattedHours}:${formattedMinutes}`;
+
+  return formattedDateTime;
+};
+
   return (
     <div class= "container_manageArtwork">
         <section className="pt-9 pb-9">
@@ -167,7 +187,7 @@ const handleUpdateArtwork = (artworkId) => {
                                                 <td><img src={artwork.artworkUrl} alt="" style={{ maxWidth: '250px' }} /></td>
                                                 <td>{artwork.likeCount}</td>
                                                 <td>{artwork.commentCount}</td>
-                                                <td>{artwork.postedAt}</td>
+                                                <td>{formatDate(artwork.postedAt)}</td>
                                                 <td>{formatPrice(artwork.price)}</td>
                                                 <td>
                                                     <button onClick={() => handleRemove(artwork.artworkId)}>Delete</button>

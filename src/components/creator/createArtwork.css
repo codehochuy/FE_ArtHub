@@ -47,7 +47,7 @@
     background-color: #000000d6; /* Màu nền */
     color: #fff; /* Màu chữ */
     border: none; /* Loại bỏ viền */
-    border-radius: 12px; /* Độ cong viền */
+    border-radius: 8px; /* Độ cong viền */
     cursor: pointer; /* Con trỏ khi di chuột */
     transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
 
