@@ -17,18 +17,7 @@ const login = (email, password) => {
       email,
       password,
     })
-    .then((response) => {
-      const { access_token, userInfo } = response.data; 
-      if (access_token) {
-        localStorage.setItem("access_token", access_token);
-        localStorage.setItem("usersID", userInfo.usersID);
-      }
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Error while logging in:", error);
-      throw error; 
-    });
+ 
 };
 
 
@@ -57,14 +46,14 @@ const logout = () => {
 
 
 
-const isLoggedIn = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user && user.token;
-};
+// const isLoggedIn = () => {
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   return user && user.token;
+// };
 
 export default {
   register,
   login,
-  isLoggedIn,
+  // isLoggedIn,
   logout,
 };

@@ -12,17 +12,19 @@ import Login from "../pages/login/Login";
 import Checkout from "../pages/checkout/Checkout";
 // import ProductDetails from "../pages/productDetails/ProductDetails";
 import MainLayout from "../components/layout/MainLayout";
-// import AdminLayout from "../components/layout/AdminLayout";
+import AdminLayout from "../components/layout/AdminLayout";
 // import ListArtWorks from "../components/admin/artwork/ListArtWorks";
 import ArtWork from "../components/home/ArtWork/ArtWork";
+import Comment from "../components/home/ArtWork/Comment/Comment";
 import Cart from "../pages/cart/Cart";
 import ManageArtwork from "../components/creator/ManageArtwork";
 import CreateArtwork from "../components/creator/CreateArtwork";
 import GetArtwork from "../components/creator/GetArtwork";
 import PaymentWallet from "../components/creator/PaymentWallet";
+import ManageUser from "../components/creator/ManageUser";
 
 // import ListVouchers from "../components/admin/voucher/ListVouchers";
-// import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
+import AdminDashboard from "../components/admin/dashboard/AdminDashboard";
 // import CreateNewProduct from "../components/admin/product/CreateNewProduct";
 // import ViewProductDetail from "../components/admin/product/ViewProductDetail";
 // import EditProductDetail from "../components/admin/product/EditProductDetail";
@@ -77,6 +79,24 @@ const Routers = () => {
           </MainLayout>
         }
       />
+       <Route
+        path="manageuser"
+        element={
+          <MainLayout>
+            < ManageUser />
+          </MainLayout>
+        }
+      />
+
+        <Route
+        path="comment"
+        element={
+          <MainLayout>
+            < Comment />
+          </MainLayout>
+        }
+      />
+      
       
      
          {/* <Route
@@ -161,14 +181,14 @@ const Routers = () => {
           </MainLayout>
         }
       />
-      {/* <Route
+      <Route
         path="admin"
         element={
           <AdminLayout>
             <AdminDashboard />
           </AdminLayout>
         }
-      /> */}
+      />
       {/* <Route
         path="admin/dashboard"
         element={

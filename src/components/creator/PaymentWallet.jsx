@@ -3,6 +3,7 @@ import userService from '../../api/user.service';
 import './createArtwork.css'; 
 import { Col, Container, Row } from "reactstrap";
 import { toast } from "react-toastify";
+import { FaWallet } from "react-icons/fa6";
 
 const PaymentWallet = () => {
     const [money, setMoney] = useState('');
@@ -65,10 +66,16 @@ const PaymentWallet = () => {
 
 
     return (
-        <div>
-            <label>Số tiền hiện có </label>
+        <div className= "container">
+           <FaWallet /> 
+           {/* <label>Số tiền hiện có </label> */}
+        
             <form onSubmit={handleSubmit}>
-                <div>
+
+        
+
+
+                {/* <div>
                     <label>Nạp thêm</label>
                     <input 
                         value={money} 
@@ -77,10 +84,34 @@ const PaymentWallet = () => {
                         type="number"
                         placeholder="Ít nhất 10.000"
                     />
-                </div>
+                </div> */}
+
+
+
+<div className="input-wrapper">
+            <label htmlFor="artworkName">Nạp thêm</label>
+{/* <div className="input-wrapper"> */}
+<div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
+<input value={money} onChange={(e) => setMoney(e.target.value)}
+className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
+type="number"
+placeholder="Ít nhất 10.000 vnd"
+/>
+</div>
+{/* </div> */}
+</div>
+
+
+
+
+
+
                 <button type="submit">Submit</button>
-            </form>
+                </form>
         </div>
+       
+       
+      
     );
 };
 

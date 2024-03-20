@@ -7,16 +7,17 @@ import { Link, useNavigate } from "react-router-dom";
 // import { paginationItems } from "../../constants/index";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useIsLogin } from "../../hooks/useIsLogin";
-import { logout } from "../../redux/slice/auth";
-import authService from "../../api/artwork.service";
+// import { useIsLogin } from "../../hooks/useIsLogin";
+// import { logout } from "../../redux/slice/auth";
+// import authService from "../../api/artwork.service";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const HeaderBottom = () => {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLogin } = useIsLogin();
+  // const { isLogin } = useIsLogin();
   const ref = useRef();
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
@@ -157,11 +158,12 @@ const HeaderBottom = () => {
                 transition={{ duration: 0.5 }}
                 className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
-                {isLogin ? (
+                {/* {isLogin ? ( */}
+                
                   <>
                     <Link to="/editProfile">
                       <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                        Edit Profile
+                        Profile
                       </li>
                     </Link>
                     <Link to="/wishlist">
@@ -181,20 +183,21 @@ const HeaderBottom = () => {
                       Logout
                     </li>
                   </>
-                ) : (
-                  <>
-                    <Link to="/login">
-                      <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                        Login
-                      </li>
-                    </Link>
-                    <Link onClick={() => setShowUser(false)} to="/signup">
-                      <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                        Sign Up
-                      </li>
-                    </Link>
-                  </>
-                )}
+                
+                 {/* ) : (
+                  // <>
+                  //   <Link to="/login">
+                  //     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                  //       Login
+                  //     </li>
+                  //   </Link>
+                  //   <Link onClick={() => setShowUser(false)} to="/signup">
+                  //     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                  //       Sign Up
+                  //     </li>
+                  //   </Link>
+                  // </>
+                // )}*/}
               </motion.ul>
             )}
             <Link to="/cart">
@@ -206,17 +209,14 @@ const HeaderBottom = () => {
               </div>
             </Link>
 
-           
-
-          </div>
-          <Link to="/manageartwork">
+            <Link to="/manageartwork">
               <div className="relative">
-                <FaShoppingCart />
-                {/* <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
-                  {totalQuantity}
-                </span> */}
+              <GiHamburgerMenu />
               </div>
             </Link>
+
+          </div>
+          
 
         </Flex>
         

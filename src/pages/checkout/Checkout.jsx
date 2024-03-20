@@ -25,7 +25,13 @@ const Checkout = () => {
         audience: userId
       })
       .then((response) => {
-        if (response.data.status === "Create order detail successful") {
+        console.log(response.data)
+       
+          const orderId = response.data.order.orderId;
+          createOrderDetail(orderId);
+        
+    
+        if (response.data.status === "Create order successful") {
    toast.success("Thành công", {
      autoClose: 1000,
      hideProgressBar: false,
@@ -35,7 +41,6 @@ const Checkout = () => {
      progress: undefined,
      theme: "dark",
    });
-   // setLoad(response.data);
  } else if (response.data.status === 'Your balance is not enough') {
    toast.error("Tài khoản không đủ số dư", {
      autoClose: 1000,

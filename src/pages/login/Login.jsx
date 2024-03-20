@@ -27,7 +27,7 @@ const LogIn = () => {
   }, [dispatch]);
 
   const initialValues = {
-    email: "david@gmail.com",
+    email: "Admin@gmail.com",
     password: "123",
   };
 
@@ -80,22 +80,50 @@ const LogIn = () => {
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(false);
-   
     authService.login(email, password)
-      .then((response) => {
-        const userInfo = response.userInfo;
-        if (userInfo.role === 'ADMIN') {
-          navigate("/admin");
-        } else if (userInfo.role === "AUDIENCE" || userInfo.role === 'CREATOR') {
-          navigate('/home');
-        }
-        window.location.reload();
-        console.log("usersID:", userInfo.usersID);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
+        .then((response) => {
+            console.log(response.data);
+            if (response.data.access_token) {
+                localStorage.setItem("access_token", response.data.access_token);
+                localStorage.setItem("usersID", response.data.userInfo.usersID); 
+                localStorage.setItem("userRole", response.data.userInfo.role); 
+                if (response.data.userInfo.role === 'ADMIN') {
+                    navigate("/manageartwork");
+                } else if (response.data.userInfo.role === "AUDIENCE" || response.data.userInfo.role === 'CREATOR') {
+                    navigate('/home');
+                }
+               window.location.reload();  // Reload trang khi đăng nhập thành công
+            }
+            return response.data;
+        })
+        .catch((error) => {
+            console.error("Error during login:", error);
+        });
+};
+
+
+
+
+
+ //   authService.login(email, password)
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       const userInfo = response.userInfo;
+  //       if (userInfo.role === 'ADMIN') {
+  //         navigate("/manageartwork");
+  //       } else if (userInfo.role === "AUDIENCE" || userInfo.role === 'CREATOR') {
+  //         navigate('/home');
+  //       }
+  //       // window.location.reload();
+  //       console.log("usersID:", userInfo.usersID);
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
+
+
+
 
   // if (isLoggedIn) {
   //   return <Navigate to="/home" />;

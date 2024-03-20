@@ -1,0 +1,16 @@
+.container {
+    margin-left: 100px; /* Thiết lập margin trái là 20px */
+    margin-top: 50px; 
+}
+.input-wrapper {
+    margin-bottom: 20px; /* Thêm margin dưới */
+    margin-left: 100px;
+}
+
+.input-wrapper label {
+    display: block; /* Hiển thị label dưới dạng block để nó nằm trên dòng riêng */
+}
+
+.input-wrapper input {
+    width: 100%; /* Chiều rộng của input đầy đủ trong phần tử div */
+}

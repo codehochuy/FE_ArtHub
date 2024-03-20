@@ -6,9 +6,16 @@
 
 .left-half {
     flex: 1; /* Khung trái sẽ chiếm một phần */
+    /*  display: flex;Sử dụng Flexbox để căn chỉnh phần tử bên trong */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    flex-direction: column; /* Hiển thị các phần tử bên trong theo chiều dọc */
 }
 
 .right-half {
-    flex: 1; /* Khung phải sẽ chiếm một phần */
-    margin-left: 20px; /* Thêm một lề bên trái cho khung phải */
+         flex: 8;
+    margin-left: 20px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    background-color: #fbfbfb;
 }
+
