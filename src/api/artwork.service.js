@@ -4,6 +4,7 @@ import AuthService from "./auth.service"; // Import AuthService để sử dụn
 
 
 const API_URL = "http://localhost:8080/api/v1/user/";
+const AUTH_URL = "http://localhost:8080/api/v1/auth/";
 // const getArtWork = () => {
 //   return axios.get(API_URL + "creator/getallArtWork", { headers: authHeader()});
 // };
@@ -19,9 +20,20 @@ const API_URL = "http://localhost:8080/api/v1/user/";
 //     return Promise.reject("User not logged in"); 
 //   }
 // };
+
+
+
+
+// const getArtWork = () => {
+//   return axios.get(API_URL + "getAllArtWork", { headers: authHeader() });
+// };
 const getArtWork = () => {
-  return axios.get(API_URL + "getAllArtWork", { headers: authHeader() });
+  return axios.get(AUTH_URL + "random", { headers: authHeader() });
 };
+
+
+
+
 
 // const getProductById = (id) => {
 //   return axios.get(`${API_URL}home/getProductById/${id}`);

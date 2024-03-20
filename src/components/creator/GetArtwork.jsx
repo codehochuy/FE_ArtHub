@@ -200,6 +200,7 @@ const formatDate = (dateTimeString) => {
                                         <th>Lượt comment</th>
                                         <th>Ngày tạo</th>
                                         <th>Giá (VND)</th>
+                                        <th>Lượt bán</th>
                                     </tr>
                                 </thead>
                                 <tbody>
