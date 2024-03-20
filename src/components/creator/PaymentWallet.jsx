@@ -9,6 +9,7 @@ const PaymentWallet = () => {
     const [money, setMoney] = useState('');
     const userId = localStorage.getItem("usersID");
     const [balance, setBalance] = useState(0);
+    const [reloadComponent, setReloadComponent] = useState(false);
     
 
     const handleSubmit = (e) => {
@@ -29,6 +30,8 @@ const PaymentWallet = () => {
                         progress: undefined,
                         theme: "dark",
                     });
+                    // Set state reloadComponent thành true để reload component
+                    setReloadComponent(true);
                 } else {
                     toast.error("Thất bại", {
                         autoClose: 1000,
@@ -76,7 +79,16 @@ const PaymentWallet = () => {
             }
         };
         fetchBalance();
-    }, []); // Chạy effect mỗi khi userId thay đổi
+        if (reloadComponent) {
+            setReloadComponent(false);
+        }
+    }, [userId, reloadComponent]); // Chạy effect mỗi khi userId hoặc reloadComponent thay đổi
+
+
+
+
+
+    
     const formattotalPrice = (orderPrice) => {
         let formattedPrice = orderPrice.toString();
         let result = '';
@@ -93,7 +105,6 @@ const PaymentWallet = () => {
 
 
 
-
     return (
         <div className= "container">
            <FaWallet /> 
@@ -102,19 +113,6 @@ const PaymentWallet = () => {
             <form onSubmit={handleSubmit}>
 
         
-
-
-                {/* <div>
-                    <label>Nạp thêm</label>
-                    <input 
-                        value={money} 
-                        onChange={(e) => setMoney(e.target.value)}
-                        className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
-                        type="number"
-                        placeholder="Ít nhất 10.000"
-                    />
-                </div> */}
-
 
 
 <div className="input-wrapper">
@@ -157,7 +155,7 @@ placeholder="Ít nhất 10.000 vnd"
 
 
 
-                <button type="submit">Submit</button>
+                <button type="submit">Xác nhận</button>
                 </form>
         </div>
        

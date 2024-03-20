@@ -153,7 +153,7 @@ const Cart = () => {
              
                 </table>
               ) : (
-                <h2 className="fs-4 text-center" style={{marginLeft:"150px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
+                <h2 className="fs-4 text-center" style={{marginLeft:"250px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
 
               )}
             </Col>

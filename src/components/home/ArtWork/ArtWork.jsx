@@ -191,11 +191,11 @@ const ArtWorkPage = () => {
             marginLeft: '300px',
             marginRight: '300px',
             marginBottom: '25px',
-            borderRadius: '10px',
+            borderRadius: '20px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
           }}>
           <p className="artwork-name">{artwork.artworkName}</p>
-          <p className="artwork-postat">{new Date(artwork.postedAt).toLocaleDateString()}</p>
+          <p className="artwork-postat">{new Date(artwork.postedAt).toLocaleDateString()} by {artwork.user.accountName}</p>
           <img
             src={artwork.artworkUrl}
             className="artwork-image"

@@ -14,6 +14,10 @@ const GetArtwork = () => {
     //update artwork
     const [updatedArtworkName, setUpdatedArtworkName] = useState('');
     const [updatedPrice, setUpdatedPrice] = useState('');
+    const [reloadComponent, setReloadComponent] = useState(false);
+
+
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -25,7 +29,14 @@ const GetArtwork = () => {
           }
         };
         fetchData();
-      }, []);
+        if (reloadComponent) {
+          setReloadComponent(false);
+      }
+      }, [userId, reloadComponent]);
+
+
+
+
       const formatPrice = (price) => {
         let formattedPrice = price.toString();
         let result = '';artworks 
@@ -50,6 +61,7 @@ const GetArtwork = () => {
                   progress: undefined,
                   theme: "dark",
                 });
+                setReloadComponent(true);
               } else {
                 toast.error("Thất bại", {
                   autoClose: 1000,
@@ -101,6 +113,7 @@ const handleUpdateArtwork = (artworkId) => {
             progress: undefined,
             theme: "dark",
           });
+          setReloadComponent(true);
           
           // window.location.reload();
         } else {
@@ -213,7 +226,8 @@ const formatDate = (dateTimeString) => {
                     onChange={(e) => setUpdatedPrice(e.target.value)}
                 />
             </p>
-            <button onClick={() => handleUpdateArtwork(selectedArtwork.artworkId)}>Xác nhận</button>
+            <button onClick={() => handleUpdateArtwork(selectedArtwork.artworkId)} style={{ width: '100px', height: '30px', padding: '0' }}>Xác nhận</button>
+
         </td>
     </tr>
 )}                                            

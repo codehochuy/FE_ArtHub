@@ -90,7 +90,7 @@ const HeaderBottom = () => {
                 </>
               </motion.ul>
             )}
-            <Link to="/cart">
+            <Link to="/cart" style={{ marginRight: '15px' }}>
               <div className="relative">
                 <FaShoppingCart />
               </div>
