@@ -77,21 +77,21 @@ const CreateArtWork = () => {
      
     
 
-        <div className= "container">
+      <div className= "container">
             <form onSubmit={handleSubmit}>
 
 
 
  <div className="input-wrapper">
             <label htmlFor="artworkName">Tên tác phẩm</label>
-<div className="input-wrapper">
+
 <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
 <input value={artworkName} onChange={(e) => setArtworkName(e.target.value)} 
 className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
 type="text"
 placeholder="Nhập tên tác phẩm"
 />
-</div>
+
 </div>
 </div>
 
@@ -110,14 +110,14 @@ placeholder="Nhập tên tác phẩm"
 
 <div className="input-wrapper">
             <label htmlFor="artworkName">Giá</label>
-<div className="input-wrapper">
+
 <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
 <input value={price} onChange={(e) => setPrice(e.target.value)}
 className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
 type="text"
 placeholder="Ít nhất 10.000 vnd"
 />
-</div>
+
 </div>
 </div>
 
@@ -132,7 +132,7 @@ placeholder="Ít nhất 10.000 vnd"
                     <input type="file" onChange={handleFileChange} />
                 </div> */}
 
-<div className="input-wrapper">
+
     <label htmlFor="artworkName">Chọn file</label>
     <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
         <input 
@@ -140,7 +140,7 @@ placeholder="Ít nhất 10.000 vnd"
             className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
             type="file"
         />
-    </div>
+   
 </div>
 
 

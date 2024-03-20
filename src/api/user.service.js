@@ -52,21 +52,15 @@ const top_up = (userId, data) => {
 const getUser = () => {
   return axios.get(ADMIN_URL + "allUser"  ,   { headers: authHeader() });
 };
-// const banUser = (email) => {
-//   return axios.put(`${ADMIN_URL}ban/${email}`,  { headers: authHeader() });
-// };
 const banUser = (id) => {
-  // return axios.put(ADMIN_URL +"banUser/"+id,{ headers: authHeader() });
   return axios.put(ADMIN_URL + "banUser/" + id, null, { headers: authHeader() });
 };
-// const unbanUser = (email) => {
-//   return axios.put(`${ADMIN_URL}unban/${email}`,  { headers: authHeader() });
-// };
 const unbanUser = (id) => {
-  // return axios.put(ADMIN_URL +"unbanUser/"+id,{ headers: authHeader() });
   return axios.put(ADMIN_URL + "unbanUser/" + id, null, { headers: authHeader() });
 };
-
+const getBalance = (id) => {
+  return axios.get(API_URL + "userinfo/" + id, { headers: authHeader() });
+};
 export default {
   addToCart,
   getCart,
@@ -85,6 +79,7 @@ export default {
   getUser,
   banUser,
   unbanUser,
+  getBalance,
 };
 
 

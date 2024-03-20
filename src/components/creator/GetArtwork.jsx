@@ -140,7 +140,7 @@ const handleUpdateArtwork = (artworkId) => {
     }
 };
   return (
-    <div>
+    <div class= "container_manageArtwork">
         <section className="pt-9 pb-9">
             <Container className="pl-10 pr-10">
                 <Row className="d-flex">

@@ -1,16 +1,66 @@
 .container {
-    margin-left: 100px; /* Thiết lập margin trái là 20px */
+    margin-left: 150px; /* Thiết lập margin trái là 20px */
     margin-top: 50px; 
 }
+
+/*input*/
+
+
 .input-wrapper {
-    margin-bottom: 20px; /* Thêm margin dưới */
-    margin-left: 100px;
-}
+    margin-bottom: 20px; /* Thêm khoảng cách dưới */
+  }
+  
+  .input-wrapper label {
+    display: block; /* Hiển thị nhãn trên dòng mới */
+    margin-bottom: 5px; /* Thêm khoảng cách dưới nhãn */
+  }
+  
+  .input-wrapper .input-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Đảm bảo rằng input không vượt quá 600px */
+    height: 50px;
+  }
+  
+  .input-wrapper input {
+    width: 100%;
+    height: 100%;
+    padding: 0 15px; /* Thêm padding cho input */
+    border: 1px solid #ccc; /* Màu viền và độ rộng */
+    border-radius: 5px; /* Độ cong viền */
+    outline: none; /* Loại bỏ viền khi focus */
+    font-size: 16px; /* Kích thước chữ */
+  }
+  
+  .input-wrapper input::placeholder {
+    color: #C4C4C4; /* Màu chữ placeholder */
+    font-size: 14px; /* Kích thước chữ placeholder */
+  }
 
-.input-wrapper label {
-    display: block; /* Hiển thị label dưới dạng block để nó nằm trên dòng riêng */
-}
 
-.input-wrapper input {
-    width: 100%; /* Chiều rộng của input đầy đủ trong phần tử div */
-}
+
+  /* button*/
+
+
+  button[type="submit"] {
+    padding: 8px 16px; /* Thêm padding cho nút */
+    background-color: #000000d6; /* Màu nền */
+    color: #fff; /* Màu chữ */
+    border: none; /* Loại bỏ viền */
+    border-radius: 12px; /* Độ cong viền */
+    cursor: pointer; /* Con trỏ khi di chuột */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #4e4e4e; /* Màu nền khi hover */
+  }
+
+
+  
+  
+
+  
+
+  

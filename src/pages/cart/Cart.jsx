@@ -8,11 +8,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import userService from "../../api/user.service";
 import { useNavigate } from "react-router-dom";
+// const [load, setLoad] = useState(null);
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -110,6 +111,12 @@ const Cart = () => {
             }
           })
   };
+
+
+ 
+
+
+
     
   return (
     <div style={{ marginLeft: '50px' , marginRight: '50px'}}>

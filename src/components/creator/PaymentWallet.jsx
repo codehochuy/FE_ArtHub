@@ -8,6 +8,7 @@ import { FaWallet } from "react-icons/fa6";
 const PaymentWallet = () => {
     const [money, setMoney] = useState('');
     const userId = localStorage.getItem("usersID");
+    const [balance, setBalance] = useState(0);
     
 
     const handleSubmit = (e) => {
@@ -64,11 +65,28 @@ const PaymentWallet = () => {
         }
     };
 
+    useEffect(() => {
+        const fetchBalance = async () => {
+            try {
+                const response = await userService.getBalance(userId);
+                console.log(response.data)
+                setBalance(response.data.money);
+            } catch (error) {
+                console.error("Error fetching balance:", error);
+            }
+        };
+        fetchBalance();
+    }, []); // Chạy effect mỗi khi userId thay đổi
+
+  
+
+
+
 
     return (
         <div className= "container">
            <FaWallet /> 
-           {/* <label>Số tiền hiện có </label> */}
+         <label>Số dư: {balance}</label> {/* Hiển thị số tiền hiện có */}
         
             <form onSubmit={handleSubmit}>
 

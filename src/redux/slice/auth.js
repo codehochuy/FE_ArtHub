@@ -44,9 +44,20 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
+
+export const logout = createAsyncThunk("auth/logout", async (_, { getState }) => {
   await AuthService.logout();
+  // Clear all items from localStorage
+  localStorage.clear();
+  
+  const state = getState();
+  if (!state.auth.isLoggedIn) {
+    // Redirect to login page after logout
+    window.location.href = '/login';
+  }
 });
+
+
 
 const initialState = user
   ? { isLoggedIn: true, user }

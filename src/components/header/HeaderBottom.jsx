@@ -5,20 +5,17 @@ import { FaSearch, FaUserCircle, FaCaretDown, FaShoppingCart } from "react-icons
 import Flex from "../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 // import { paginationItems } from "../../constants/index";
-
 import { useDispatch, useSelector } from "react-redux";
-// import { useIsLogin } from "../../hooks/useIsLogin";
-// import { logout } from "../../redux/slice/auth";
-// import authService from "../../api/artwork.service";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { logout } from "../../redux/slice/auth";
 
 const HeaderBottom = () => {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  // const { isLogin } = useIsLogin();
   const ref = useRef();
+  const dispatch = useDispatch();
+ 
+  
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
       if (ref.current.contains(e.target)) {
@@ -28,116 +25,38 @@ const HeaderBottom = () => {
       }
     });
   }, [show, ref]);
-    // const [listArtWorks, setListArtWork] = useState([]);
-    // useEffect(() => {
-    //   authService.getArtWork().then((data) => {
-    //     // console.log(data);
-    //     if (data.error) {
-    //       console.log(data.error);
-    //     } else {
-    //       setListArtWork(data.data.data);
-    //     }
-    //   });
-    // }, []);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredArtworks, setFilteredArtWork] = useState([]);
-  // console.log("🚀 ~ HeaderBottom ~ filteredProducts:", filteredProducts)
-  const [showSearchBar, setShowSearchBar] = useState(false);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+
+  
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleLogOut = () => {
+    dispatch(logout()); // Dispatch the logout action
   };
 
-  // useEffect(() => {
-  //   const filtered = listArtWorks.filter((item) =>
-  //     item.title.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  //   setFilteredArtWork(filtered);
-  // }, [searchQuery]);
-
-
-  // const totalQuantity = useSelector(state => state.cart.totalQuantity)
-  // const handleLogOut = () => {
-  //   dispatch(logout())
-  //     .unwrap()
-  //     .then(() => {
-  //       navigate("/login");
-  //     })
-  //     .catch(() => {
-  //     });
-  // };
   return (
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
         <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
-          <div
+        <div
             onClick={() => setShow(!show)}
             ref={ref}
             className="flex h-14 cursor-pointer items-center gap-2 text-primeColor"
           ></div>
+
+
+
           <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
             <input
               className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
               type="text"
-              onChange={handleSearch}
               value={searchQuery}
               placeholder="Search your Artworks here"
             />
             <FaSearch className="w-5 h-5 cursor-pointer" />
-            {searchQuery && (
-              <div
-                className={`w-full mx-auto h-96 bg-white top-16 absolute left-0 z-50 overflow-y-scroll shadow-2xl scrollbar-hide cursor-pointer`}
-              >
-                {searchQuery &&
-                  filteredArtworks.map((item) => (
-                    <div
-                      onClick={() =>
-                        navigate(
-                          `/ArtWorkPage/${String(item.title)
-                            .toLowerCase()
-                            .split(" ")
-                            .join("")}`,
-                          {
-                            state: {
-                              item: {
-                                id: item.artworkId,
-                                artworkName: item.artworkName,
-                                artworkUrl: item.artworkUrl,
-                                postedAt: item.postedAt,
-                                price: item.price,
-                                likeCount: item.likeCount,
-                                commentCount: item.commentCount,
-                                // badge: true,
-                                // des: item.description,
-                              },
-                            },
-                          }
-                        ) &
-                        setShowSearchBar(true) &
-                        setSearchQuery("")
-                      }
-                      key={item._id}
-                      className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
-                    >
-                      <img
-                        className="w-24"
-                        src={item.thumbnail}
-                        alt="productImg"
-                      />
-                      <div className="flex flex-col gap-1">
-                        {/* <p className="font-semibold text-lg">{item.title}</p>
-                        <p className="text-xs">{item.description}</p> */}
-                        <p className="text-sm">
-                          Price:{" "}
-                          <span className="text-primeColor font-semibold">
-                            ${item.price}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
+           
+
+            
           </div>
           <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
             <div
@@ -184,28 +103,13 @@ const HeaderBottom = () => {
                     </li>
                   </>
                 
-                 {/* ) : (
-                  // <>
-                  //   <Link to="/login">
-                  //     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  //       Login
-                  //     </li>
-                  //   </Link>
-                  //   <Link onClick={() => setShowUser(false)} to="/signup">
-                  //     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  //       Sign Up
-                  //     </li>
-                  //   </Link>
-                  // </>
-                // )}*/}
+            
               </motion.ul>
             )}
             <Link to="/cart">
               <div className="relative">
                 <FaShoppingCart />
-                {/* <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
-                  {totalQuantity}
-                </span> */}
+              
               </div>
             </Link>
 

@@ -2,21 +2,53 @@ import { useEffect, useState } from "react";
 import Image from "../../components/designLayouts/Image";
 import userService from "../../api/user.service";
 import { toast } from "react-toastify";
+import { Col, Container, Row } from "reactstrap";
 const Checkout = () => {
-  const [listCart, setListCart] = useState([]);
-  const [load, setLoad] = useState(null);
+
+
+
+  // const [listCart, setListCart] = useState([]);
+  // const [load, setLoad] = useState(null);
   const orderPrice = localStorage.getItem("totalPrice");
- 
+  const [carts, setCarts] = useState([]);
   const userId = localStorage.getItem("usersID");
+
+  
+  // useEffect(() => {
+  //   userService.getCart().then((data) => {
+  //     if (data.error) {
+  //       console.log(data.error);
+  //     } else {
+  //       setListCart(data.data);
+  //     }
+  //   });
+  // }, [load]);
+
   useEffect(() => {
-    userService.getCart().then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setListCart(data.data);
+    const fetchData = async () => {
+      try {
+        const response = await userService.getCart();
+        setCarts(response.data);
+      } 
+      catch (error) {
+        console.error("Error fetching artworks:", error);
       }
-    });
-  }, [load]);
+    };
+    fetchData();
+  }, []);
+  const formatPrice = (price) => {
+    let formattedPrice = price.toString();
+    let result = '';
+    for (let i = formattedPrice.length - 1, j = 1; i >= 0; i--, j++) {
+      result = formattedPrice[i] + result;
+      if (j % 3 === 0 && i !== 0) {
+        result = '.' + result;
+      }
+    }
+    return result;
+  };
+
+
   
   const createOrder = () => {
     userService
@@ -25,70 +57,59 @@ const Checkout = () => {
         audience: userId
       })
       .then((response) => {
-        console.log(response.data)
-       
+        console.log(response.data);
+        if (response.data.status === "Your balance is not enough") {
+          toast.error("Tài khoản không đủ số dư", {
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        } else{
+          
           const orderId = response.data.order.orderId;
           createOrderDetail(orderId);
-        
-    
-        if (response.data.status === "Create order successful") {
-   toast.success("Thành công", {
-     autoClose: 1000,
-     hideProgressBar: false,
-     closeOnClick: true,
-     pauseOnHover: false,
-     draggable: true,
-     progress: undefined,
-     theme: "dark",
-   });
- } else if (response.data.status === 'Your balance is not enough') {
-   toast.error("Tài khoản không đủ số dư", {
-     autoClose: 1000,
-     hideProgressBar: false,
-     closeOnClick: true,
-     pauseOnHover: false,
-     draggable: true,
-     progress: undefined,
-     theme: "dark",
-   });
- }
- else {
-   toast.error("Thất bại", {
-     autoClose: 1000,
-     hideProgressBar: false,
-     closeOnClick: true,
-     pauseOnHover: false,
-     draggable: true,
-     progress: undefined,
-     theme: "dark",
-   });
- }
-     })
-     .catch(() => {
-      toast.error("Thất bại", {
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating order:", error);
       });
-    });
-        
-    };
-          
-      
-        const createOrderDetail = (orderId) => {
-          userService
-            .createOrderDetail({
-              orderId: orderId,
-              audience: userId
-            })
-            .then((response) => {
-              
-            })
-      };
+  };
+  
+  const createOrderDetail = (orderId) => {
+    userService
+      .createOrderDetail({
+        orderId: orderId,
+        audience: userId
+      })
+      .then((response) => {
+        console.log(response.data);
+
+        if (response.data.status === "Create order detail successful") {
+          toast.success("Thành công", {
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        } 
+      })
+      .catch((error) => {
+        console.error("Error creating order:", error);
+      });
+  };
+  
+
+
+
+
+
 
       const formattotalPrice = (orderPrice) => {
         let formattedPrice = orderPrice.toString();
@@ -108,7 +129,8 @@ const Checkout = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
+    
+    <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" className="text-2xl font-bold text-gray-800">
           Trang thanh toán
         </a>
@@ -187,7 +209,13 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+
+
+
+
+
+
+    
         {/* <div className="px-4 pt-8">
           <p className="text-xl font-medium">Chưa biết ghi gì ở đây</p>
           <p className="text-gray-400">
@@ -215,11 +243,138 @@ const Checkout = () => {
               ))}
           </div>
         </div> */}
+        
+          <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
         <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-          <p className="text-xl font-medium">
+        <div style={{ marginLeft: '50px' , marginRight: '50px'}}>
+      <section className="pt-9 pb-9">
+        <Container className="pl-8 pr-8">
+          <Row className="d-flex">
+            <Col lg="9">
+              {carts && carts.length > 0 ? (
+                <table className="table bordered">
+                  <thead>
+                    <tr>
+                    <th>STT</th>
+                      <th>Tên tác phẩm</th>
+                      <th>Ảnh tác phẩm</th>
+                      {/* <th>Ngày tạo</th> */}
+                      <th>Giá</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {carts.map((cart, index) => (
+                      <tr key={cart.cartId}>
+                         <td>{index +1}</td>
+                         <td>{cart.artwork.artworkName}</td>
+                         <img src={cart.artwork.artworkUrl} alt="" style={{ maxWidth: '250px' }} />
+                         {/* <td>{formatDate(cart.artwork.postedAt)}</td> */}
+                         <td>{formatPrice(cart.artwork.price)}</td>
+                         {/* <td>
+                         <button onClick={() => handleRemoveFromCart(cart.cartId)}>Delete</button>
+</td> */}
+                      </tr>
+                    ))}
+                  </tbody>
+             
+                </table>
+              ) : (
+                <h2 className="fs-4 text-center" style={{marginLeft:"350px", marginBottom:"300px"}}>Không có gì trong giỏ hàng</h2>
+
+              )}
+            </Col>
+            {carts.length > 0 && (
+               <Col lg="3">
+              <div>
+                <h6 className="d-flex align-items-center justify-content-between">
+                {/* Tổng tiền hàng: <span className="fs-4 fw-bold">{TotalPrice()}</span> */}
+                </h6>
+              </div>
+              <p className="fs-5 mt-2">
+              </p>
+              
+                
+             
+            </Col>
+             )}
+          </Row>
+        </Container>
+      </section>
+    </div>
+  );
+        </div>
+
+        <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
+        <p className="text-xl font-medium">
+Tổng thanh toán: {formattotalPrice(orderPrice)}
+</p>
+          <p className="mt-8 text-lg font-medium">Phương thức thanh toán</p>
+          <form className="mt-5 grid gap-6">
+            <div className="relative">
+              <input
+                className="peer hidden"
+                id="radio_1"
+                type="radio"
+                name="radio"
+                checked
+              />
+              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+              <label
+                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                htmlFor="radio_1"
+              >
+                <img
+                  className="w-14 object-contain"
+                  src="https://kalite.vn/wp-content/uploads/2021/09/maqrkalite.jpg"
+                  alt=""
+                />
+              <div className="ml-5">
+  <span className="mt-2 font-semibold">VNPAY</span>
+
+</div>
+              </label>
+            </div>
+            <div className="relative">
+              <input
+                className="peer hidden"
+                id="radio_2"
+                type="radio"
+                name="radio"
+                checked
+              />
+           
+            </div>
+          </form>
+          <button
+            className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+            onClick={() => createOrder(orderPrice)}
+          >
+            Đặt hàng
+          </button>
+        </div>
+      </div>
+    
+    </> 
+  );
+};
+
+export default Checkout;
+
+
+
+
+
+
+
+
+
+
+
+ {/*  <p className="text-xl font-medium">
             Địa chỉ giao hàng
           </p>
-          {/* <p className="mt-8 text-lg font-medium">Payment Methods</p>
+           <p className="mt-8 text-lg font-medium">Payment Methods</p>
           <form className="mt-5 grid gap-6">
             <div className="relative">
               <input
@@ -282,79 +437,7 @@ const Checkout = () => {
           >
             Đặt hàng
           </button> */}
-        </div>
-
-        <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-        <p className="text-xl font-medium">
-Tổng thanh toán: {formattotalPrice(orderPrice)}
-</p>
-          <p className="mt-8 text-lg font-medium">Phương thức thanh toán</p>
-          <form className="mt-5 grid gap-6">
-            <div className="relative">
-              <input
-                className="peer hidden"
-                id="radio_1"
-                type="radio"
-                name="radio"
-                checked
-              />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_1"
-              >
-                <img
-                  className="w-14 object-contain"
-                  src="/images/vnpay logo.png"
-                  alt=""
-                />
-              <div className="ml-5">
-  <span className="mt-2 font-semibold">Ví VNPAY</span>
-  <img src="../../assets/images/Checkout/vnpay_logo.jpg" alt="VNPAY Logo" />
-</div>
 
 
-              </label>
-            </div>
-            <div className="relative">
-              <input
-                className="peer hidden"
-                id="radio_2"
-                type="radio"
-                name="radio"
-                checked
-              />
-              <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-              <label
-                className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                htmlFor="radio_2"
-              >
-                <img
-                  className="w-14 object-contain"
-                  src="/images/oG8xsl3xsOkwkMsrLGKM4.png"
-                  alt=""
-                />
-                <div className="ml-5">
-                  <span className="mt-2 font-semibold">
-                    Thanh toán khi nhận hàng (COD)
-                  </span>
-                  {/* <p className="text-slate-500 text-sm leading-6">
-                    Delivery: 2-4 Days
-                  </p> */}
-                </div>
-              </label>
-            </div>
-          </form>
-          <button
-            className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-            onClick={() => createOrder(orderPrice)}
-          >
-            Đặt hàng
-          </button>
-        </div>
-      </div>
-    </>
-  );
-};
 
-export default Checkout;
+           

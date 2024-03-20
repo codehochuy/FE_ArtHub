@@ -1,7 +1,10 @@
 .grid-container {
     display: flex; /* Sử dụng Flexbox */
-    margin-left: 150px;
+    margin-left: 120px;
     margin-right: 150px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    
 }
 
 .left-half {
@@ -18,4 +21,7 @@
     border-radius: 3px;
     background-color: #fbfbfb;
 }
-
+.link-button {
+    margin-right: 500px;
+  }
+  

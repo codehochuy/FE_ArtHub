@@ -21,13 +21,14 @@ const LogIn = () => {
   const { message } = useSelector((state) => state.message);
   const { search } = useLocation();
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
 
   const initialValues = {
-    email: "Admin@gmail.com",
+    email: "david@gmail.com",
     password: "123",
   };
 
@@ -39,43 +40,8 @@ const LogIn = () => {
       .min(3, "Password must be at least 4 characters")
       .required("Password is required"),
   });
+  
 
-  // const SignInMail = () => {
-  //   const providerGoogle = new GoogleAuthProvider();
-  //   signInWithPopup(auth, providerGoogle)
-  //     .then(function (result) {
-  //     })
-  //     .catch(function (error) {
-  //       var errorCode = error.code;
-  //       var errorMessage = error.message;
-  //       console.error(errorCode, errorMessage);
-  //     });
-  // };
-  // const handleLogin = (formValue) => {
-  //   const { email, password } = formValue;
-  //   setLoading(false);
-
-  //   dispatch(login({ email, password }))
-  //     .unwrap()
-  //     .then((user) => {
-  //       // console.log("zxcxzc",user,user.user);
-  //       if (user.userInfo.role === 'ADMIN') {
-  //         navigate("/admin");
-  //       } else if (response.data.userInfo.role === "AUDIENCE") {
-  //         navigate('/home')
-  //       }
-  //       else if (response.data.userInfo.role === 'CREATOR') {
-  //         navigate('/home')
-  //       }
-  //       localStorage.setItem('usersID', user.userInfo.usersID);
-  //       console.log(user.userInfo.usersID);
-  //       window.location.reload();
-
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // };
 
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
@@ -104,32 +70,7 @@ const LogIn = () => {
 
 
 
-
- //   authService.login(email, password)
-  //     .then((response) => {
-  //       console.log(response.data)
-  //       const userInfo = response.userInfo;
-  //       if (userInfo.role === 'ADMIN') {
-  //         navigate("/manageartwork");
-  //       } else if (userInfo.role === "AUDIENCE" || userInfo.role === 'CREATOR') {
-  //         navigate('/home');
-  //       }
-  //       // window.location.reload();
-  //       console.log("usersID:", userInfo.usersID);
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // };
-
-
-
-
-  // if (isLoggedIn) {
-  //   return <Navigate to="/home" />;
-  // }
   if (isLoggedIn) {
-    // return <Redirect to="/ArtWorkPage" />; // Nếu đã đăng nhập, chuyển hướng người dùng đến trang ArtWorkPage
     return <Navigate to="/ArtWork" />;
   }
 

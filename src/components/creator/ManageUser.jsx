@@ -25,31 +25,19 @@ const ManageUser = () => {
         userService.banUser(user.usersID)
             .then(response => {
                 console.log(response.data)
-                // Xử lý khi gọi API thành công
-                console.log("User banned successfully!");
-                // Thực hiện các hành động khác cần thiết sau khi ban user
             })
             .catch(error => {
-                // Xử lý khi gọi API gặp lỗi
                 console.error("Error banning user:", error);
-                // Hiển thị thông báo lỗi hoặc thực hiện các hành động khác tùy thuộc vào trường hợp
             });
     };
 
     const handleUnbanUser = (user) => {
         userService.unbanUser(user.usersID)
-        
             .then(response => {
                 console.log(response.data)
-                
-                // Xử lý khi gọi API thành công
-                console.log("User unban successfully!");
-                // Thực hiện các hành động khác cần thiết sau khi ban user
             })
             .catch(error => {
-                // Xử lý khi gọi API gặp lỗi
                 console.error("Error banning user:", error);
-                // Hiển thị thông báo lỗi hoặc thực hiện các hành động khác tùy thuộc vào trường hợp
             });
     };
   
@@ -98,13 +86,13 @@ const ManageUser = () => {
 
 
                                                 <td>
-    {/* {user.userStatus ? ( */}
-        {/* <button onClick={() => handleUnbanUser(user.usersID)}>Ban</button> */}
-        <button onClick={() => handleUnbanUser(user)}>Ban</button>
-     {/* ) : (  */}
-        {/* <button onClick={() => handleBanUser(user.usersID)}>UnBan</button> */}
-        <button onClick={() => handleBanUser(user)}>UnBan</button>
-     {/* )}  */}
+    {user.userStatus ? (
+      
+        <button onClick={() => handleBanUser(user)}>Disabled</button>
+       ) : (  
+       
+        <button onClick={() => handleUnbanUser(user)}>Enabled</button>
+      )}  
 </td>
   
 
