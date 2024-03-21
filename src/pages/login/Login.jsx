@@ -7,6 +7,7 @@ import { clearMessage } from "../../redux/slice/message";
 import * as Yup from "yup";
 import authService from '../../api/auth.service';
 import { toast } from "react-toastify";
+
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -182,10 +183,20 @@ const LogIn = () => {
                       <span>Login</span>
                     )}
                   </button>
-                </div>
+                 
+                </div><br></br>
+               
+
+
               </Form>
+              
+              
             )}
           </Formik>
+
+    
+
+
         </div>
         {message && (
           <div className="mb-4">
