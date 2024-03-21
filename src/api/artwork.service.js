@@ -27,6 +27,10 @@ const AUTH_URL = "http://localhost:8080/api/v1/auth/";
 // const getArtWork = () => {
 //   return axios.get(API_URL + "getAllArtWork", { headers: authHeader() });
 // };
+
+// const getArtWork = () => {
+//   return axios.get(`${API_URL}getAllArtWork`,  { headers: authHeader() });
+// };
 const getArtWork = () => {
   return axios.get(AUTH_URL + "random", { headers: authHeader() });
 };

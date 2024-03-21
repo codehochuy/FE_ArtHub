@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CreateArtwork from './CreateArtwork';
 import GetArtwork from './GetArtwork';
+import HistoryOrder from './HistoryOrder';
 import PaymentWallet from './PaymentWallet';
 import ManageUser from './ManageUser';
 import { IoIosCreate } from "react-icons/io";
@@ -9,6 +10,7 @@ import "./manageArtwork.css";
 import { GrUserManager } from "react-icons/gr";
 import { GiWallet } from "react-icons/gi";
 import { AiFillPicture } from "react-icons/ai";
+import { BiSolidShoppingBagAlt } from "react-icons/bi";
 
 const ManageArtwork = () => {
     const userRole = localStorage.getItem("userRole");
@@ -17,6 +19,7 @@ const ManageArtwork = () => {
     const [showGetArtwork, setShowGetArtwork] = useState(false); 
     const [showPaymentWallet, setShowPaymentWallet] = useState(false); 
     const [showUser, setShowUser] = useState(false); 
+    const [showHistory, setShowHistory] = useState(false); 
     const [isUserManagerExpanded, setIsUserManagerExpanded] = useState(true); 
 
     
@@ -26,6 +29,7 @@ const ManageArtwork = () => {
         setShowGetArtwork(false); 
         setShowPaymentWallet(false);
         setShowUser(false);
+        setShowHistory(false); 
     };
     
     const handleGetArtworkClick = () => {
@@ -33,6 +37,7 @@ const ManageArtwork = () => {
         setShowCreateArtwork(false); 
         setShowPaymentWallet(false);
         setShowUser(false);
+        setShowHistory(false); 
     };
 
     const handleGetPaymentWalletClick = () => {
@@ -40,6 +45,7 @@ const ManageArtwork = () => {
         setShowCreateArtwork(false); 
         setShowGetArtwork(false); 
         setShowUser(false);
+        setShowHistory(false); 
     };
     
     const handleUserClick = () => {
@@ -47,6 +53,16 @@ const ManageArtwork = () => {
         setShowCreateArtwork(false); 
         setShowGetArtwork(false); 
         setShowPaymentWallet(false);
+        setShowHistory(false); 
+    };
+    const handleGetHistoryClick = () => {
+        setShowHistory(true); 
+        setShowCreateArtwork(false); 
+        setShowGetArtwork(false); 
+        setShowPaymentWallet(false);
+        setShowUser(false); 
+        
+        
     };
 
     return (
@@ -75,8 +91,13 @@ const ManageArtwork = () => {
                         </div>
                         <br/>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <BiSolidShoppingBagAlt/><Link to="#" onClick={handleGetHistoryClick} style={{ marginLeft: '5px' }}>Tác phẩm đã bán</Link>
+                        </div>
+                        <br/>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                             <GiWallet/><Link to="#" onClick={handleGetPaymentWalletClick} style={{ marginLeft: '5px' }}>Ví thanh toán</Link>
                         </div>
+                     
                         
                     </>
                 )}
@@ -94,6 +115,7 @@ const ManageArtwork = () => {
                     {showGetArtwork && <GetArtwork />} 
                     {showPaymentWallet && <PaymentWallet/>}
                     {showUser && <ManageUser/>}
+                    {showHistory && <HistoryOrder/>}
                 </div>
             </div>
         </div>

@@ -54,6 +54,7 @@ const LogIn = () => {
                 localStorage.setItem("access_token", response.data.access_token);
                 localStorage.setItem("usersID", response.data.userInfo.usersID); 
                 localStorage.setItem("userRole", response.data.userInfo.role); 
+                localStorage.setItem("accountName", response.data.userInfo.accountName); 
                 if (response.data.userInfo.role === 'ADMIN') {
                     navigate("/manageartwork");
                 } else if (response.data.userInfo.role === "AUDIENCE" || response.data.userInfo.role === 'CREATOR') {

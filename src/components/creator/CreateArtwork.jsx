@@ -34,7 +34,17 @@ const CreateArtWork = () => {
         progress: undefined,
         theme: "dark",
     });
-    }
+    }else if (!file){
+      toast.error("Chưa chọn file", {
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+    });
+  }
     else{
     const requestData = {
       artworkName: artworkName,

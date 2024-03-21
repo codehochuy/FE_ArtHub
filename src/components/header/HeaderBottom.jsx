@@ -12,6 +12,7 @@ const HeaderBottom = () => {
   const [showUser, setShowUser] = useState(false);
   const ref = useRef();
   const dispatch = useDispatch();
+  const accountName = localStorage.getItem("accountName");
   
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
@@ -31,6 +32,7 @@ const HeaderBottom = () => {
 
   return (
     <div className="w-full bg-[#F5F5F3] relative">
+     
       <div className="max-w-container mx-auto">
         <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-2 lg:pb-0 h-16 lg:h-20"> {/* Adjusted height here */}
           <div
@@ -50,6 +52,7 @@ const HeaderBottom = () => {
           </div>
           
           <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
+          {accountName}
             <div
               onClick={() => setShowUser(!showUser)}
               className="flex"
@@ -58,6 +61,7 @@ const HeaderBottom = () => {
               <FaUserCircle />
               <FaCaretDown />
             </div>
+           
             {showUser && (
               <motion.ul
                 initial={{ y: 30, opacity: 0 }}
@@ -66,6 +70,7 @@ const HeaderBottom = () => {
                 className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
                 <>
+                
                   <Link to="/editProfile">
                     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                       Profile

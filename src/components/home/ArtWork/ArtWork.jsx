@@ -196,11 +196,23 @@ const ArtWorkPage = () => {
           }}>
           <p className="artwork-name">{artwork.artworkName}</p>
           <p className="artwork-postat">{new Date(artwork.postedAt).toLocaleDateString()} by {artwork.user.accountName}</p>
-          <img
+
+
+
+          {/* <img
             src={artwork.artworkUrl}
             className="artwork-image"
             onClick={() => handleImageClick(artwork.artworkUrl)}
-          />
+          /> */}
+          <img
+          src={artwork.artworkUrl}
+          className="artwork-image"
+          onClick={() => handleImageClick(artwork.artworkUrl)}
+          onContextMenu={(e) => e.preventDefault()} // Ngăn chặn click chuột phải
+        />
+
+
+
           <div className="artwork-info-container">
             <div className="artwork-like" onClick={() => handleLikeClick(artwork.artworkId)}>
               <button> <FaHeart className="heart-icon" /></button>
@@ -266,11 +278,22 @@ const ArtWorkPage = () => {
           </li>
         </div>
       ))}
-      {zoomedImage && (
+      {/* {zoomedImage && (
         <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
           <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
         </div>
-      )}
+      )} */}
+      {zoomedImage && (
+  <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
+    <img
+      src={zoomedImage}
+      alt="Zoomed Image"
+      className="zoomed-image"
+      onContextMenu={(e) => e.preventDefault()} // Ngăn chặn click chuột phải trên ảnh đã zoom
+    />
+  </div>
+)}
+
        {showComment && <Comment />}
     </div>
   );

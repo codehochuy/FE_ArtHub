@@ -171,7 +171,8 @@ placeholder="Ít nhất 10.000 vnd"
 
                 
               <div className="ml-5 mt-2">
-    <span className="font-semibold">Cổng thanh toán VNPAY</span>
+    <span className="font-semibold">Cổng thanh toán VNPAY</span><br></br>
+    Đang hoàn thiện
 </div></label>
 </div>
 

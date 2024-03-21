@@ -72,9 +72,12 @@ const Checkout = () => {
           // sendMail(orderId);
           setTimeout(() => {
             sendMail(orderId);
-            
-          }, 5000);
+          }, 2000);
           createOrderDetail(orderId);
+          setTimeout(() => {
+            navigate('/checkoutdone');
+          }, 1000);
+          
          
           
         }
@@ -104,9 +107,7 @@ const Checkout = () => {
 
         if (response.data.status === "Create order detail successful") {
           // Chờ 2 giây trước khi chuyển hướng
-          setTimeout(() => {
-            navigate('/checkoutdone');
-          }, 2000);
+          
          
         } 
       })

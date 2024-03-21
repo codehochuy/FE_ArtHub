@@ -19,7 +19,6 @@ const [zoomedImage, setZoomedImage] = useState(null);
       try {
         const response = await userService.viewOrder(usersID);
         setOrders(response.data);
-        // console.log("Response:", response.data);
       } catch (error) {
         console.error("Error fetching artworks:", error);
       }
@@ -27,27 +26,8 @@ const [zoomedImage, setZoomedImage] = useState(null);
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData2 = async () => {
-  //     try {
-  //       const response2 = await userService.viewOrderDetail(order.orderId);
-  //       setOrders(response2.data);
-  //       console.log("Response:", response2.data);
-  //     } catch (error) {
-  //       console.error("Error fetching artworks:", error);
-  //     }
-  //   };
-  //   fetchData2();
-  // }, []);
-  // const viewOrderDetail = async (orderId) => {
-  //   try {
-  //     const response2 = await userService.viewOrderDetail(orderId);
-  //     setOrderdetails(response2.data);
-  //     console.log("Response:", response2.data);
-  //   } catch (error) {
-  //     console.error("Error fetching artworks:", error);
-  //   }
-  // };
+  
+
   const viewOrderDetail = async (orderId) => {
     try {
       const response = await userService.viewOrderDetail(orderId);
@@ -64,10 +44,7 @@ const [zoomedImage, setZoomedImage] = useState(null);
     setZoomedImage(null);
   };
   function formatPrice(price) {
-    // Chuyển giá thành chuỗi và đảm bảo đó là số
     price = parseFloat(price).toFixed(0).toString();
-  
-    // Sử dụng regex để thêm dấu chấm sau mỗi 3 chữ số từ cuối cùng
     return price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
   }
   const formatDate = (dateTimeString) => {
@@ -78,13 +55,10 @@ const [zoomedImage, setZoomedImage] = useState(null);
     const hours = date.getHours();
     const minutes = date.getMinutes();
   
-    // Đảm bảo các số có hai chữ số bằng cách thêm số 0 nếu cần
     const formattedDay = day < 10 ? '0' + day : day;
     const formattedMonth = month < 10 ? '0' + month : month;
     const formattedHours = hours < 10 ? '0' + hours : hours;
     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-  
-    // Định dạng lại chuỗi ngày/tháng/năm giờ:phút
     const formattedDateTime = `${formattedDay}/${formattedMonth}/${year} ${formattedHours}:${formattedMinutes}`;
   
     return formattedDateTime;
@@ -95,13 +69,11 @@ const [zoomedImage, setZoomedImage] = useState(null);
 
   return (
     <div className="" style={{ marginLeft: '50px' , marginRight: '250px'}}>
-    {/* <div style={{ marginLeft: '50px' , marginRight: '50px'}}> */}
       <section className="pt-9 pb-9">
         <Container className="pl-8 pr-8">
           <Row className="d-flex">
             <Col lg="11">
             {orders && orders.length > 0 ? (
-              //  {orders ? (
                 <table className="table bordered">
                   <thead>
                     <tr>
@@ -113,48 +85,41 @@ const [zoomedImage, setZoomedImage] = useState(null);
                   <tbody>
                     
                     {orders.map((order, index) => (
-                    //  <tr key={index}>
                     <React.Fragment key={index}>
       <tr>
         <td>{order.orderId}</td>
         <td>{formatDate(order.orderDate)}</td>
-        {/* <td>{order.orderPrice}</td> */}
         <td>{formatPrice(order.orderPrice)}</td>
         <td>
           <button onClick={() => viewOrderDetail(order.orderId)}>Xem chi tiết</button>
         </td>
       </tr>
-      {/* {orderdetails && orderdetails.length > 0 && orderdetails[0].orderId === order.orderId && ( */}
       {orderDetailsMap[order.orderId] && orderDetailsMap[order.orderId].length > 0 && orderDetailsMap[order.orderId][0].order.orderId === order.orderId && (
   <tr>
     <td colSpan="4">
       <div>
         <table className="table bordered">
-          {/* <thead> */}
-            {/* <tr> */}
-              {/* <th>STT</th> */}
-           
-              {/* <th>Artwork Name</th>
-              <th>Artwork Url</th>
-              <th>Order Detail Price</th> */}
-            {/* </tr> */}
-          {/* </thead> */}
           <tbody>
             {orderDetailsMap[order.orderId].map((detail, index) => (
               <tr key={index}>
-                {/* <td>{index + 1}</td> */}
-                
                 <td>{detail.artwork.artworkName}</td>
-                {/* <td>{detail.artwork.artworkUrl}</td> */}
-                <img 
+
+
+                {/* <img 
           src={detail.artwork.artworkUrl}  
-          // style={{ maxWidth: `${zoomLevel * 600}px`, cursor: 'pointer' }} 
           className="order-image"
           onClick={() => handleImageClick(detail.artwork.artworkUrl)}
-          // onMouseEnter={() => setIsImageHovered(true)}
-          // onMouseLeave={() => setIsImageHovered(false)}
-        />
-                {/* <td>{detail.orderDetailPrice}</td> */}
+        /> */}
+
+<img
+  src={detail.artwork.artworkUrl}
+  className="order-image"
+  onClick={() => handleImageClick(detail.artwork.artworkUrl)}
+  onContextMenu={(e) => e.preventDefault()} // Ngăn chặn click chuột phải trên ảnh
+/>
+
+
+
                 <td>{formatPrice(detail.orderDetailPrice)}</td>
               </tr>
             ))}
@@ -175,13 +140,23 @@ const [zoomedImage, setZoomedImage] = useState(null);
   </Row>
         </Container>
       </section>
-      {zoomedImage && (
+      {/* {zoomedImage && (
       <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
         <img src={zoomedImage} alt="Zoomed Image" className="zoomed-image" />
       </div>
-    )}
+    )} */}
+    {zoomedImage && (
+  <div className="zoomed-image-overlay" onClick={handleZoomedImageOverlayClick}>
+    <img
+      src={zoomedImage}
+      alt="Zoomed Image"
+      className="zoomed-image"
+      onContextMenu={(e) => e.preventDefault()} // Ngăn chặn click chuột phải trên ảnh đã zoom
+    />
+  </div>
+)}
 
-    {/* </div> */}
+
     </div>
   );
   };

@@ -10,6 +10,7 @@ import Login from "../pages/login/Login";
 // import Contact from "../pages/contact/Contact";
 // import Shop from "../pages/shop/Shop";
 import Checkout from "../pages/checkout/Checkout";
+
 import CheckoutDone from "../pages/checkout/CheckoutDone";
 // import ProductDetails from "../pages/productDetails/ProductDetails";
 import MainLayout from "../components/layout/MainLayout";
@@ -21,6 +22,8 @@ import Cart from "../pages/cart/Cart";
 import ManageArtwork from "../components/creator/ManageArtwork";
 import CreateArtwork from "../components/creator/CreateArtwork";
 import GetArtwork from "../components/creator/GetArtwork";
+import HistoryOrder from "../components/creator/HistoryOrder";
+
 import PaymentWallet from "../components/creator/PaymentWallet";
 import ManageUser from "../components/creator/ManageUser";
 
@@ -190,6 +193,15 @@ const Routers = () => {
           </MainLayout>
         }
       />
+       <Route
+        path="historyorder"
+        element={
+          <MainLayout>
+            <  HistoryOrder />
+          </MainLayout>
+        }
+      />
+      
       <Route
         path="admin"
         element={

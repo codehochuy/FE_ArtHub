@@ -65,6 +65,15 @@ const getBalance = (id) => {
 const sendMail = (orderId) => {
   return axios.post(`${AUTH_URL}sendArtworkInfo/${orderId}`, null, { headers: authHeader() });
 };
+// const historyOrder = (orderId) => {
+//   return axios.get(`${CREATOR_URL}history/${orderId}`, null ,null , { headers: authHeader() });
+// };
+const historyOrder = (userid) => {
+  return axios.get(`${CREATOR_URL}history/${userid}`, {
+    headers: authHeader()
+  });
+};
+
 
 
 
@@ -89,7 +98,5 @@ export default {
   unbanUser,
   getBalance,
   sendMail,
+  historyOrder,
 };
-
-
-
