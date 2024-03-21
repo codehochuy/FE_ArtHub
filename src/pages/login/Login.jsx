@@ -29,7 +29,7 @@ const LogIn = () => {
   }, [dispatch]);
 
   const initialValues = {
-    email: "david@gmail.com",
+    email: "huypt110402@gmail.com",
     password: "123",
   };
 
